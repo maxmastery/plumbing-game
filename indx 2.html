@@ -2,77 +2,93 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>แบบฝึกคิดวิเคราะห์และแก้ปัญหา เรื่อง "สุดยอดช่างปะปา"</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>แบบฝึกคิดวิเคราะห์และแก้ปัญหา เรื่อง "สุดยอดช่างประปา"</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            /* ป้องกันการเลือกข้อความโดยไม่ตั้งใจบนมือถือ */
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
         }
         
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Sarabun', 'Arial', sans-serif;
             background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
             min-height: 100vh;
-            padding: 20px;
+            padding: 10px;
         }
         
         .container {
-            max-width: 1100px;
+            max-width: 800px; /* ลดความกว้างสูงสุดเพื่อให้กระชับขึ้น */
             margin: 0 auto;
             background: white;
             border-radius: 15px;
-            padding: 20px;
+            padding: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
         
         .header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         
         .header h1 {
             color: #2d3436;
-            font-size: 2.2em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            font-size: 1.8em;
+            margin-bottom: 5px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
         
+        /* ปรับปรุงส่วนคำอธิบายให้กระชับ */
         .instructions {
-            background: #f1f2f6;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            font-size: 1.1em;
-            line-height: 1.5;
+            background: #e1f5fe;
+            border-left: 5px solid #0984e3;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-size: 1em;
+            color: #2c3e50;
+        }
+
+        .instructions ul {
+            margin-left: 20px;
+            margin-top: 5px;
+        }
+
+        .instructions li {
+            margin-bottom: 3px;
         }
         
         .game-stats {
             display: flex;
-            justify-content: space-between;
+            justify-content: space-around;
             align-items: center;
             background: #f1f2f6;
-            padding: 15px;
+            padding: 10px;
             border-radius: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             flex-wrap: wrap;
             gap: 10px;
         }
         
         .level-info, .score-info, .timer-info {
             text-align: center;
-            font-size: 1.1em;
+            font-size: 1em;
             color: #2d3436;
-            padding: 10px;
+            padding: 8px 15px;
             border-radius: 8px;
             background: white;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            min-width: 100px;
         }
         
         .timer-info {
             font-weight: bold;
-            font-size: 1.3em;
+            color: #0984e3;
         }
         
         .timer-warning {
@@ -86,119 +102,101 @@
             100% { transform: scale(1); }
         }
         
-        /* จัดกลุ่มปุ่มควบคุมใหม่ให้อยู่ในแนวตั้ง โดยปุ่มทดสอบอยู่ตรงกลางชัดเจน */
-        .controls {
+        .top-controls {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .other-buttons {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
             justify-content: center;
-            width: 100%;
+            gap: 10px;
+            margin-bottom: 15px;
         }
         
         button {
-            padding: 15px 30px;
-            font-size: 18px;
+            padding: 10px 20px;
+            font-size: 16px;
             border: none;
-            border-radius: 10px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: active 0.1s ease;
             font-weight: bold;
+            font-family: inherit;
+        }
+        
+        /* ปุ่มด้านล่าง (ทดสอบระบบ) */
+        .bottom-controls {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            width: 100%;
         }
 
-        /* ปุ่มทดสอบระบบน้ำขนาดใหญ่ เด่นเป็นพิเศษ */
         #testSystemBtn {
-            font-size: 22px;
-            padding: 20px 50px;
+            font-size: 20px;
+            padding: 15px 40px;
             background: #0984e3;
             color: #fff;
-            border-radius: 12px;
-            min-width: 250px;
-            width: 70%;
+            border-radius: 50px;
+            width: 90%;
             max-width: 400px;
-            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
         }
-        #testSystemBtn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        #testSystemBtn:active {
+            transform: scale(0.98);
         }
-        
-        .btn-primary {
-            background: #0984e3;
-            color: white;
-        }
-        
-        .btn-success {
-            background: #00b894;
-            color: white;
+        #testSystemBtn:disabled {
+            background: #b2bec3;
+            cursor: not-allowed;
+            transform: none;
         }
         
-        .btn-warning {
-            background: #fdcb6e;
-            color: #2d3436;
-        }
-        
-        .btn-danger {
-            background: #e17055;
-            color: white;
-        }
-        
-        button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
+        .btn-warning { background: #fdcb6e; color: #2d3436; }
+        .btn-danger { background: #e17055; color: white; }
         
         .game-area {
             display: flex;
-            gap: 20px;
+            gap: 15px;
             justify-content: center;
             align-items: flex-start;
+            flex-wrap: wrap; /* ให้ตกบรรทัดได้บนมือถือ */
         }
         
-        /* ทำให้พื้นที่วางท่อใหญ่กว่าโซนแสดงชิ้นส่วน */
         .game-board {
             background: #f8f9fa;
-            padding: 25px;
+            padding: 10px;
             border-radius: 15px;
-            border: 3px solid #74b9ff;
-            /* Increase flex ratio and max-width to give the board more space */
-            flex: 3;
-            max-width: 600px;
-        }
-        .puzzle-pieces {
-            background: #f8f9fa;
-            padding: 25px;
-            border-radius: 15px;
-            border: 3px solid #74b9ff;
-            /* Reduce flex ratio and max-width for the piece palette */
-            flex: 0.7;
-            max-width: 250px;
+            border: 2px solid #74b9ff;
+            flex: 0 0 auto;
         }
         
-        .puzzle-pieces h3, .game-board h3 {
+        .puzzle-pieces {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 15px;
+            border: 2px solid #74b9ff;
+            flex: 1;
+            min-width: 120px;
+            max-width: 200px;
+            display: flex;
+            flex-direction: column;
+            height: 380px; /* ให้สูงเท่าๆ กับกระดาน */
+        }
+        
+        h3 {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             color: #2d3436;
-            font-size: 1.4em;
+            font-size: 1.1em;
         }
         
         .pieces-container {
             display: flex;
-            flex-direction: column;
-            gap: 15px;
+            flex-wrap: wrap;
+            gap: 8px;
             justify-content: center;
-            padding: 20px;
+            padding: 10px;
             background: white;
             border-radius: 10px;
-            min-height: 360px;
-            position: relative;
+            flex-grow: 1;
+            align-content: flex-start;
+            overflow-y: auto;
         }
         
         .board-grid {
@@ -206,374 +204,190 @@
             grid-template-columns: repeat(6, 1fr);
             gap: 2px;
             background: #a5d8ff;
-            padding: 20px;
-            border-radius: 10px;
-            /* ปรับขนาดให้ตรงกับขนาดช่อง + ช่องว่าง เพื่อให้เส้นตรงกัน */
-            width: 346px;
-            height: 346px;
+            padding: 5px;
+            border-radius: 8px;
+            width: 320px; /* Fixed width for consistency */
+            height: 320px;
             margin: 0 auto;
             position: relative;
-            background-image: 
-                linear-gradient(#a5d8ff 1px, transparent 1px),
-                linear-gradient(90deg, #a5d8ff 1px, transparent 1px);
-            background-size: 58px 58px;
         }
         
-        .puzzle-piece {
-            width: 50px;
-            height: 50px;
-            cursor: grab;
-            border: 2px solid #ddd;
+        /* สไตล์ชิ้นส่วน */
+        .puzzle-piece, .piece-in-cell {
+            width: 48px;
+            height: 48px;
             border-radius: 8px;
-            transition: all 0.3s ease;
             background-size: contain;
             background-position: center;
             background-repeat: no-repeat;
-            margin: 0 auto;
+            touch-action: none; /* สำคัญมากสำหรับ Touch Event */
         }
         
-        .puzzle-piece:hover {
-            transform: scale(1.05);
-            border-color: #0984e3;
-            box-shadow: 0 5px 15px rgba(9,132,227,0.3);
-        }
-        
-        .puzzle-piece.dragging {
-            opacity: 0.6;
-            cursor: grabbing;
+        .puzzle-piece {
+            border: 2px solid #dfe6e9;
+            cursor: grab;
+            background-color: white;
         }
         
         .board-cell {
-            width: 56px;
-            height: 56px;
-            border: 2px dashed #bdc3c7;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            background: rgba(255,255,255,0.7);
+            width: 50px; /* (320 - (5*2) - 10padding) / 6 approx 50 */
+            height: 50px;
+            border: 1px dashed #bdc3c7;
+            border-radius: 4px;
+            background: rgba(255,255,255,0.8);
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
-        }
-        
-        .board-cell.drag-over {
-            border-color: #0984e3;
-            background: #e8f4f8;
-            border-style: solid;
         }
         
         .board-cell.occupied {
             border-style: solid;
-            border-color: #6c757d;
+            border-color: #636e72;
             background: white;
         }
-        
+
+        .board-cell.obstacle {
+            background: #ffeaa7;
+            border: 2px solid #e17055;
+        }
+        .board-cell.obstacle::after {
+            content: "✖";
+            color: #d63031;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
         .board-cell.correct {
-            border-color: #00b894;
-            border-width: 3px;
+            border: 2px solid #00b894;
             background: #d1f2eb;
         }
         
         .board-cell.incorrect {
-            border-color: #e17055;
-            border-width: 3px;
+            border: 2px solid #e17055;
             background: #fab1a0;
         }
 
-        /* Style obstacles so players know they cannot place pipes here */
-        /* Style obstacles so that players clearly see they cannot place pipes there. Use a red dashed border and a big X overlay. */
-        .board-cell.obstacle {
-            background: #fff6f6;
-            border: 2px dashed #e74c3c;
-            position: relative;
-        }
-        /* Diagonal cross lines for obstacles */
-        .board-cell.obstacle::after,
-        .board-cell.obstacle::before {
-            content: "";
-            position: absolute;
-            top: 6px;
-            left: 6px;
-            right: 6px;
-            bottom: 6px;
-            border-top: 2px solid #e74c3c;
-            border-bottom: 2px solid #e74c3c;
-            pointer-events: none;
-        }
-        .board-cell.obstacle::after {
-            transform: rotate(45deg);
-        }
-        .board-cell.obstacle::before {
-            transform: rotate(-45deg);
-        }
-        
         .piece-in-cell {
             width: 100%;
             height: 100%;
-            background-size: contain;
-            background-position: center;
-            background-repeat: no-repeat;
-            border-radius: 4px;
             cursor: move;
         }
         
+        /* Drag helper (ตัวที่ลอยตามนิ้ว) */
+        .drag-helper {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            width: 60px;
+            height: 60px;
+            opacity: 0.9;
+            transform: translate(-50%, -50%);
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.3));
+        }
+
+        .trash-bin {
+            margin-top: auto;
+            width: 100%;
+            height: 60px;
+            background-color: #fab1a0;
+            border: 2px dashed #d63031;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #d63031;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .trash-bin::before {
+            content: "🗑️ ลากมาทิ้งที่นี่";
+        }
+        .trash-bin.highlight {
+            background-color: #ff7675;
+            color: white;
+            transform: scale(1.05);
+        }
+        
+        /* Water Flow Animation */
         .water-flow {
             position: absolute;
-            background-color: rgba(0, 168, 255, 0.5);
+            background-color: rgba(0, 168, 255, 0.6);
             z-index: 5;
             transition: all 0.5s ease;
         }
-        
-        .trash-bin {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            width: 50px;
-            height: 50px;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M25,10 L30,10 L30,20 L70,20 L70,10 L75,10 L75,30 L25,30 Z" fill="%23636e72"/><rect x="30" y="35" width="40" height="60" fill="%23d63031"/><rect x="40" y="45" width="5" height="40" fill="%23ffffff"/><rect x="55" y="45" width="5" height="40" fill="%23ffffff"/></svg>');
-            background-repeat: no-repeat;
-            background-position: center;
-            cursor: pointer;
-            border: 2px dashed #636e72;
-            border-radius: 5px;
-        }
-        
-        .trash-bin.highlight {
-            border-color: #d63031;
-            background-color: rgba(214, 48, 49, 0.1);
-            animation: shake 0.5s infinite;
-        }
-        
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-3px); }
-            75% { transform: translateX(3px); }
-        }
-        
-        .success-message {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: linear-gradient(135deg, #00b894, #00cec9);
-            color: white;
-            padding: 40px 60px;
-            border-radius: 20px;
-            font-size: 24px;
-            font-weight: bold;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-            z-index: 1000;
-            animation: successPop 0.6s ease-out;
-            text-align: center;
-            max-width: 500px;
-        }
-        
-        .error-message {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: linear-gradient(135deg, #e17055, #d63031);
-            color: white;
-            padding: 40px 60px;
-            border-radius: 20px;
-            font-size: 24px;
-            font-weight: bold;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-            z-index: 1000;
-            animation: successPop 0.6s ease-out;
-            text-align: center;
-            max-width: 500px;
-        }
-        
-        .final-score-message {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
-            color: white;
-            padding: 40px 60px;
-            border-radius: 20px;
-            font-size: 20px;
-            font-weight: bold;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-            z-index: 1000;
-            animation: successPop 0.6s ease-out;
-            text-align: center;
-            max-width: 600px;
-            line-height: 1.5;
-        }
-        
-        .grade {
-            font-size: 3em;
-            margin: 20px 0;
-        }
-        
-        .grade.A-plus { color: #00b894; }
-        .grade.A { color: #0984e3; }
-        .grade.B-plus { color: #74b9ff; }
-        .grade.B { color: #fdcb6e; }
-        .grade.C-plus { color: #fd79a8; }
-        .grade.C { color: #e17055; }
-        .grade.D { color: #636e72; }
-        .grade.F { color: #d63031; }
-        
-        @keyframes successPop {
-            0% {
-                opacity: 0;
-                transform: translate(-50%, -50%) scale(0.3);
-            }
-            50% {
-                transform: translate(-50%, -50%) scale(1.1);
-            }
-            100% {
-                opacity: 1;
-                transform: translate(-50%, -50%) scale(1);
-            }
-        }
-        
-        .message-button {
-            margin-top: 20px;
-            padding: 15px 30px;
-            background: rgba(255,255,255,0.2);
-            border: 2px solid white;
-            border-radius: 10px;
-            color: white;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-        
-        .message-button:hover {
-            background: rgba(255,255,255,0.3);
-        }
-        
-        .developer-info {
-            text-align: center;
-            margin-top: 25px;
-            padding: 15px;
-            background: #f1f2f6;
-            border-radius: 10px;
-            color: #636e72;
-            font-size: 14px;
-            line-height: 1.5;
-        }
-        
-        .developer-info strong {
-            color: #2d3436;
-        }
 
-        .solution-overlay {
+        /* Overlay Messages */
+        .overlay-message {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.7);
-            z-index: 1000;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.85);
             display: flex;
             justify-content: center;
             align-items: center;
+            z-index: 10000;
+            flex-direction: column;
+            color: white;
+            text-align: center;
         }
-
-        .solution-content {
+        
+        .overlay-content {
             background: white;
+            color: #333;
             padding: 30px;
             border-radius: 15px;
-            max-width: 800px;
-            width: 90%;
-            text-align: center;
+            max-width: 90%;
+            width: 400px;
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .solution-board {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 2px;
-            background: #a5d8ff;
-            padding: 20px;
-            border-radius: 10px;
-            width: 346px;
-            height: 346px;
-            margin: 20px auto;
-            position: relative;
-            background-image: 
-                linear-gradient(#a5d8ff 1px, transparent 1px),
-                linear-gradient(90deg, #a5d8ff 1px, transparent 1px);
-            background-size: 58px 58px;
+        @keyframes popIn {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
 
-        .solution-cell {
-            width: 56px;
-            height: 56px;
-            border: 2px solid #6c757d;
-            border-radius: 8px;
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .solution-piece {
+        .overlay-content h2 { margin-bottom: 15px; color: #0984e3; }
+        .overlay-content p { margin-bottom: 20px; font-size: 1.1em; }
+        
+        .big-btn {
+            display: block;
             width: 100%;
-            height: 100%;
-            background-size: contain;
-            background-position: center;
-            background-repeat: no-repeat;
-            border-radius: 4px;
+            padding: 15px;
+            background: #00b894;
+            color: white;
+            border-radius: 10px;
+            font-size: 1.2em;
+            margin-top: 10px;
         }
 
-        .solution-path {
-            position: absolute;
-            background-color: rgba(0, 255, 0, 0.3);
-            z-index: -1;
-        }
-
-        @media (max-width: 768px) {
-            .game-area {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .puzzle-pieces, .game-board {
-                width: 100%;
-                max-width: none;
-            }
-            
-            .header h1 {
-                font-size: 1.8em;
-            }
-            
-            .puzzle-piece {
-                width: 40px;
-                height: 40px;
-            }
-            
-            .board-cell {
-                width: 46px;
-                height: 46px;
-            }
-            
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
             .board-grid {
                 width: 300px;
                 height: 300px;
             }
-            
-            .controls button {
-                padding: 10px 15px;
-                font-size: 16px;
+            .board-cell {
+                width: 48px;
+                height: 48px;
             }
-
-            .solution-board {
-                width: 300px;
-                height: 300px;
+            .game-area {
+                flex-direction: column;
+                align-items: center;
             }
-
-            .solution-cell {
-                width: 46px;
-                height: 46px;
+            .puzzle-pieces {
+                width: 100%;
+                max-width: 300px;
+                height: auto;
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+            .pieces-container {
+                height: auto;
+                justify-content: center;
+            }
+            .trash-bin {
+                width: 100%;
+                margin-top: 10px;
             }
         }
     </style>
@@ -581,58 +395,45 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>แบบฝึกคิดวิเคราะห์และแก้ปัญหา เรื่อง "สุดยอดช่างปะปา"</h1>
+            <h1>สุดยอดช่างประปา 🔧</h1>
         </div>
         
         <div class="instructions">
-            <strong>วิธีเล่น:</strong>
-            ลากชิ้นส่วนท่อจากแถบทางขวามือมาวางบนตารางทางซ้ายเพื่อสร้างเส้นทางจาก <em>วาล์วน้ำ</em> ซึ่งเป็นหัวจ่ายน้ำกลมอยู่ตรงกลางช่อง (เริ่มต้น) ไปยัง <em>ก๊อกน้ำ</em> ที่ปลายทาง (สิ้นสุด) โดยท่อทั้งสองจุดนี้สามารถต่อท่อออกหรือเข้ามาได้ทุกทิศทาง  
-            ช่องที่มีเครื่องหมาย X คือสิ่งกีดขวาง ไม่สามารถวางท่อได้ ให้หาทางลัดเลี่ยงสิ่งกีดขวางเหล่านี้และเชื่อมท่อให้ครบเส้นทาง  
-            เมื่อวางท่อครบแล้ว ให้กดปุ่ม <strong>“ทดสอบระบบน้ำ”</strong> ระบบจะวิ่งตรวจท่อน้ำทีละชิ้นพร้อมไฮไลต์กรอบสี: ถ้าต่อถูกต้องจะขึ้นกรอบสีเขียวและไหลต่อไปจนถึงก๊อกน้ำ เมื่อถึงก๊อกน้ำจะมีข้อความยินดีและปุ่มไปด่านถัดไป หากพบการเชื่อมต่อผิด ระบบจะหยุดที่กรอบสีแดงและให้คุณเริ่มใหม่
+            <strong>วิธีเล่นง่ายๆ:</strong>
+            <ul>
+                <li>1. ลากท่อจากด้านขวา มาวางเชื่อมต่อกันในตาราง</li>
+                <li>2. ต่อท่อให้เชื่อมจาก <strong>"วาล์วเริ่มต้น"</strong> ไปยัง <strong>"ก๊อกน้ำปลายทาง"</strong></li>
+                <li>3. ห้ามวางทับช่องที่มีกากบาท ❌</li>
+                <li>4. เมื่อมั่นใจ กดปุ่ม <strong>"💧 ทดสอบระบบน้ำ"</strong> ด้านล่างได้เลย!</li>
+            </ul>
         </div>
         
         <div class="game-stats">
-            <div class="level-info">
-                <strong>🎯 Level: <span id="currentLevel">1</span>/<span id="totalLevels">10</span></strong><br>
-                <span id="levelName">บ้านหลังที่ 1</span>
-            </div>
-            <div class="score-info">
-                <strong>🏆 คะแนนรวม: <span id="totalScore">0</span></strong><br>
-                <small>คะแนนด่านนี้: <span id="currentScore">10</span>/10</small>
-            </div>
-            <div class="timer-info" id="timerDisplay">
-                <strong>⏰ เหลือเวลา</strong><br>
-                <span id="timeLeft">05:00</span>
-            </div>
+            <div class="level-info">ด่านที่ <span id="currentLevel">1</span>/10</div>
+            <div class="score-info">คะแนน: <span id="totalScore">0</span></div>
+            <div class="timer-info">เวลา <span id="timeLeft">05:00</span></div>
         </div>
         
-        <div class="controls">
-            <!-- ปุ่มทดสอบระบบน้ำขนาดใหญ่จะอยู่ตรงกลางเหนือปุ่มอื่น ๆ -->
-            <button class="btn-primary" id="testSystemBtn" onclick="game.testSystem()" disabled>💧 ทดสอบระบบน้ำ</button>
-            <div class="other-buttons">
-                <button class="btn-warning" onclick="game.resetLevel()">🔄 เริ่มใหม่</button>
-                <button class="btn-danger" onclick="game.resetGame()">🛑 เริ่มต้นใหม่</button>
-            </div>
+        <div class="top-controls">
+            <button class="btn-warning" onclick="game.resetLevel()">🔄 เรียงใหม่</button>
+            <button class="btn-danger" onclick="game.resetGame()">🛑 เริ่มเกมใหม่</button>
         </div>
         
         <div class="game-area">
             <div class="game-board">
-                <h3>🏠 พื้นที่วางท่อ</h3>
+                <h3>พื้นที่วางท่อ</h3>
                 <div class="board-grid" id="boardGrid"></div>
             </div>
             
             <div class="puzzle-pieces">
-                <h3>🔧 ชิ้นส่วนท่อน้ำ</h3>
-                <div class="pieces-container" id="piecesContainer">
-                    <div class="trash-bin" id="trashBin"></div>
-                </div>
+                <h3>ชิ้นส่วนท่อ</h3>
+                <div class="pieces-container" id="piecesContainer"></div>
+                <div class="trash-bin" id="trashBin"></div>
             </div>
         </div>
-        
-        <div class="developer-info">
-            <strong>ผู้พัฒนา:</strong> นายธนิท ธนพัตนิรัชกุล<br>
-            <strong>ตำแหน่ง:</strong> ครูผู้ช่วย<br>
-            <strong>สถานศึกษา:</strong> โรงเรียนกาฬสินธุ์ปัญญานุกูล จังหวัดกาฬสินธุ์
+
+        <div class="bottom-controls">
+            <button id="testSystemBtn" onclick="game.testSystem()" disabled>💧 ทดสอบระบบน้ำ</button>
         </div>
     </div>
 
@@ -646,1573 +447,568 @@
                 this.board = Array(this.totalPieces).fill(null);
                 this.totalScore = 0;
                 this.currentScore = 10;
-                this.timeLeft = 300; // 5 นาที = 300 วินาที
+                this.timeLeft = 300;
                 this.timer = null;
                 this.gameStarted = false;
-                this.gameCompleted = false;
                 this.canMovePieces = false;
-                this.startCell = 0;
-                this.endCell = 0;
-                this.obstacles = [];
-                this.solutions = [
-                    // Level 1
-                    { 
-                        pipes: [
-                            null, null, null, null, null, null,
-                            null, null, null, null, null, null,
-                            null, null, null, null, null, null,
-                            null, null, null, null, null, null,
-                            null, null, null, null, null, null,
-                            null, null, null, null, null, null
-                        ],
-                        path: [0, 6, 12, 18, 24, 30] // ตัวอย่างเส้นทางเฉลย
-                    },
-                    // Level 2-10 (สามารถเพิ่มเฉลยสำหรับแต่ละด่านได้ตามต้องการ)
+                
+                // กำหนดตำแหน่งเริ่มต้นและสิ้นสุดของแต่ละด่าน
+                this.levels = [
+                    { name: "บ้านหลังที่ 1", start: 30, end: 5 },
+                    { name: "บ้านหลังที่ 2", start: 29, end: 6 },
+                    { name: "บ้านหลังที่ 3", start: 25, end: 10 },
+                    { name: "บ้านหลังที่ 4", start: 31, end: 11 },
+                    { name: "บ้านหลังที่ 5", start: 24, end: 9 },
+                    { name: "บ้านหลังที่ 6", start: 28, end: 7 },
+                    { name: "บ้านหลังที่ 7", start: 33, end: 15 }, // แก้ไข: ตรวจสอบตำแหน่งนี้ให้ถูกต้อง
+                    { name: "บ้านหลังที่ 8", start: 32, end: 13 },
+                    { name: "บ้านหลังที่ 9", start: 34, end: 4 },
+                    { name: "บ้านหลังที่ 10", start: 26, end: 16 }
                 ];
+                
+                this.pieceImages = {}; // Cache images
+                this.preloadImages();
                 
                 this.pieceTypes = {
-                    'straight-vertical': { 
-                        name: 'ท่อแนวตั้ง', 
-                        image: this.createStraightVerticalPipeImage(), 
-                        connections: ['top', 'bottom'] 
-                    },
-                    'straight-horizontal': { 
-                        name: 'ท่อแนวนอน', 
-                        image: this.createStraightHorizontalPipeImage(), 
-                        connections: ['left', 'right'] 
-                    },
-                    'left-top': { 
-                        name: 'ท่อเลี้ยวซ้ายบน', 
-                        image: this.createLeftTopPipeImage(), 
-                        connections: ['top', 'left'] 
-                    },
-                    'right-top': { 
-                        name: 'ท่อเลี้ยวขวาบน', 
-                        image: this.createRightTopPipeImage(), 
-                        connections: ['top', 'right'] 
-                    },
-                    'left-bottom': { 
-                        name: 'ท่อเลี้ยวซ้ายล่าง', 
-                        image: this.createLeftBottomPipeImage(), 
-                        connections: ['bottom', 'left'] 
-                    },
-                    'right-bottom': { 
-                        name: 'ท่อเลี้ยวขวาล่าง', 
-                        image: this.createRightBottomPipeImage(), 
-                        connections: ['bottom', 'right'] 
-                    }
+                    'straight-vertical': { name: 'แนวตั้ง', connections: ['top', 'bottom'] },
+                    'straight-horizontal': { name: 'แนวนอน', connections: ['left', 'right'] },
+                    'left-top': { name: 'โค้งซ้ายบน', connections: ['top', 'left'] },
+                    'right-top': { name: 'โค้งขวาบน', connections: ['top', 'right'] },
+                    'left-bottom': { name: 'โค้งซ้ายล่าง', connections: ['bottom', 'left'] },
+                    'right-bottom': { name: 'โค้งขวาล่าง', connections: ['bottom', 'right'] }
                 };
-                
-                // กำหนดตำแหน่งเริ่มต้นและสิ้นสุดของแต่ละด่านแบบคงที่เพื่อให้แสดงเฉลยได้แน่นอน
-                // แต่ละด่านมี start และ end เป็นดัชนีของตาราง 6x6 (0-35)
-                this.levels = [
-                    { name: "บ้านหลังที่ 1", obstacles: [], start: 30, end: 5 },   // start: (5,0), end: (0,5)
-                    { name: "บ้านหลังที่ 2", obstacles: [], start: 29, end: 6 },   // start: (4,5), end: (1,0)
-                    { name: "บ้านหลังที่ 3", obstacles: [], start: 25, end: 10 },  // start: (4,1), end: (1,4)
-                    { name: "บ้านหลังที่ 4", obstacles: [], start: 31, end: 11 },  // start: (5,1), end: (1,5)
-                    { name: "บ้านหลังที่ 5", obstacles: [], start: 24, end: 9 },   // start: (4,0), end: (1,3)
-                    { name: "บ้านหลังที่ 6", obstacles: [], start: 28, end: 7 },   // start: (4,4), end: (1,1)
-                    { name: "บ้านหลังที่ 7", obstacles: [], start: 33, end: 15 },  // start: (5,3), end: (2,3)
-                    { name: "บ้านหลังที่ 8", obstacles: [], start: 32, end: 13 },  // start: (5,2), end: (2,1)
-                    { name: "บ้านหลังที่ 9", obstacles: [], start: 34, end: 4 },   // start: (5,4), end: (0,4)
-                    { name: "บ้านหลังที่ 10", obstacles: [], start: 26, end: 16 } // start: (4,2), end: (2,4)
-                ];
-                
+
                 this.init();
+            }
+
+            preloadImages() {
+                // สร้างรูปภาพเตรียมไว้เพื่อลดการวาดซ้ำๆ และใช้สำหรับ Drag Helper
+                const types = ['valve', 'faucet', 'straight-vertical', 'straight-horizontal', 'left-top', 'right-top', 'left-bottom', 'right-bottom'];
+                types.forEach(type => {
+                    if(type === 'valve') this.pieceImages[type] = this.createValveImage();
+                    else if(type === 'faucet') this.pieceImages[type] = this.createFaucetImage();
+                    else if(type === 'straight-vertical') this.pieceImages[type] = this.createPipeImage(['top','bottom']);
+                    else if(type === 'straight-horizontal') this.pieceImages[type] = this.createPipeImage(['left','right']);
+                    else if(type === 'left-top') this.pieceImages[type] = this.createPipeImage(['top','left']);
+                    else if(type === 'right-top') this.pieceImages[type] = this.createPipeImage(['top','right']);
+                    else if(type === 'left-bottom') this.pieceImages[type] = this.createPipeImage(['bottom','left']);
+                    else if(type === 'right-bottom') this.pieceImages[type] = this.createPipeImage(['bottom','right']);
+                });
             }
 
             init() {
                 this.loadLevel(this.currentLevel);
-                this.setupEventListeners();
+                this.setupTouchAndMouseEvents();
             }
 
-            setupEventListeners() {
-                document.addEventListener('dragstart', this.handleDragStart.bind(this));
-                document.addEventListener('dragover', this.handleDragOver.bind(this));
-                document.addEventListener('dragleave', this.handleDragLeave.bind(this));
-                document.addEventListener('drop', this.handleDrop.bind(this));
-                document.addEventListener('dragend', this.handleDragEnd.bind(this));
-                
-                // Trash bin events
-                const trashBin = document.getElementById('trashBin');
-                trashBin.addEventListener('dragover', (e) => {
-                    e.preventDefault();
-                    trashBin.classList.add('highlight');
-                });
-                
-                trashBin.addEventListener('dragleave', () => {
-                    trashBin.classList.remove('highlight');
-                });
-                
-                trashBin.addEventListener('drop', (e) => {
-                    e.preventDefault();
-                    trashBin.classList.remove('highlight');
+            setupTouchAndMouseEvents() {
+                // Unified Event Handler for both Mouse and Touch
+                const handleStart = (e) => {
+                    if (!this.canMovePieces) return;
                     
-                    const fromCell = e.dataTransfer.getData('fromCell');
-                    if (fromCell) {
-                        this.returnPieceToContainer(fromCell);
+                    // หา Element ที่ถูกกด (รองรับทั้ง Mouse และ Touch)
+                    const touch = e.touches ? e.touches[0] : e;
+                    const target = document.elementFromPoint(touch.clientX, touch.clientY);
+                    
+                    if (!target) return;
+
+                    // หาชิ้นส่วนที่เป็นเป้าหมาย (จากกล่องเครื่องมือ หรือ จากกระดาน)
+                    let sourcePiece = target.closest('.puzzle-piece') || target.closest('.piece-in-cell');
+                    if (!sourcePiece) return;
+
+                    e.preventDefault(); // ป้องกัน Scroll บนมือถือ
+
+                    this.dragState = {
+                        isDragging: true,
+                        type: sourcePiece.dataset.type,
+                        fromIndex: sourcePiece.parentElement.classList.contains('board-cell') ? 
+                                   sourcePiece.parentElement.dataset.index : null,
+                        element: sourcePiece
+                    };
+
+                    // สร้างตัวช่วยลาก (Ghost Element)
+                    this.createDragHelper(sourcePiece, touch.clientX, touch.clientY);
+                    
+                    // ถ้าลากมาจากกระดาน ให้ซ่อนตัวจริงชั่วคราว
+                    if (this.dragState.fromIndex !== null) {
+                        sourcePiece.style.opacity = '0.3';
                     }
+                };
+
+                const handleMove = (e) => {
+                    if (!this.dragState || !this.dragState.isDragging) return;
+                    e.preventDefault();
+
+                    const touch = e.touches ? e.touches[0] : e;
+                    
+                    // ขยับตัวช่วยลาก
+                    if (this.dragHelper) {
+                        this.dragHelper.style.left = touch.clientX + 'px';
+                        this.dragHelper.style.top = touch.clientY + 'px';
+                    }
+
+                    // ไฮไลท์ช่องที่ลากผ่าน
+                    this.clearHighlights();
+                    const targetEl = document.elementFromPoint(touch.clientX, touch.clientY);
+                    const cell = targetEl?.closest('.board-cell');
+                    const trash = targetEl?.closest('.trash-bin');
+
+                    if (cell && !cell.classList.contains('obstacle')) {
+                        cell.style.borderColor = '#0984e3';
+                        cell.style.background = '#e8f4f8';
+                    } else if (trash) {
+                        trash.classList.add('highlight');
+                    }
+                };
+
+                const handleEnd = (e) => {
+                    if (!this.dragState || !this.dragState.isDragging) return;
+                    
+                    // ลบตัวช่วยลาก
+                    if (this.dragHelper) this.dragHelper.remove();
+                    this.dragHelper = null;
+                    
+                    // คืนค่า Opacity ตัวเดิม
+                    if (this.dragState.element) {
+                        this.dragState.element.style.opacity = '1';
+                    }
+
+                    // หาจุดตก
+                    const touch = e.changedTouches ? e.changedTouches[0] : e;
+                    const targetEl = document.elementFromPoint(touch.clientX, touch.clientY);
+                    
+                    const cell = targetEl?.closest('.board-cell');
+                    const trash = targetEl?.closest('.trash-bin');
+
+                    // กรณี: ทิ้งลงถังขยะ
+                    if (trash) {
+                        if (this.dragState.fromIndex !== null) {
+                            this.removeFromBoard(this.dragState.fromIndex);
+                        }
+                    }
+                    // กรณี: วางลงในช่อง
+                    else if (cell && !cell.classList.contains('obstacle')) {
+                        const toIndex = cell.dataset.index;
+                        // ห้ามวางทับจุด Start/End
+                        if (toIndex != this.startCell && toIndex != this.endCell) {
+                            this.placePiece(this.dragState.type, toIndex);
+                            // ถ้าเป็นการย้ายมาจากช่องอื่น ให้ลบของเดิมออก
+                            if (this.dragState.fromIndex !== null && this.dragState.fromIndex !== toIndex) {
+                                this.removeFromBoard(this.dragState.fromIndex);
+                            }
+                        }
+                    } 
+                    // กรณี: ปล่อยที่อื่น (ถ้าลากจากกระดาน = ลบออก เหมือนทิ้งลงพื้น)
+                    else if (this.dragState.fromIndex !== null) {
+                         // Optional: จะให้เด้งกลับ หรือลบเลย? เอาแบบลบเลยเพื่อให้ใช้ง่าย
+                         this.removeFromBoard(this.dragState.fromIndex);
+                    }
+
+                    this.clearHighlights();
+                    this.dragState = { isDragging: false };
+                };
+
+                // Attach events
+                document.addEventListener('mousedown', handleStart);
+                document.addEventListener('mousemove', handleMove);
+                document.addEventListener('mouseup', handleEnd);
+                
+                // Touch events (สำคัญ: passive: false เพื่อให้ preventDefault ทำงาน)
+                document.addEventListener('touchstart', handleStart, { passive: false });
+                document.addEventListener('touchmove', handleMove, { passive: false });
+                document.addEventListener('touchend', handleEnd);
+            }
+
+            createDragHelper(source, x, y) {
+                if (this.dragHelper) this.dragHelper.remove();
+                
+                this.dragHelper = document.createElement('div');
+                this.dragHelper.className = 'drag-helper';
+                // ใช้รูปภาพเดียวกับต้นฉบับ
+                this.dragHelper.style.backgroundImage = source.style.backgroundImage;
+                this.dragHelper.style.backgroundSize = 'contain';
+                this.dragHelper.style.backgroundRepeat = 'no-repeat';
+                
+                this.dragHelper.style.left = x + 'px';
+                this.dragHelper.style.top = y + 'px';
+                
+                document.body.appendChild(this.dragHelper);
+            }
+
+            clearHighlights() {
+                document.querySelectorAll('.board-cell').forEach(c => {
+                    c.style.borderColor = '';
+                    c.style.background = '';
                 });
+                document.getElementById('trashBin').classList.remove('highlight');
+            }
+
+            placePiece(type, index) {
+                this.board[index] = type;
+                const cell = document.querySelector(`.board-cell[data-index="${index}"]`);
+                cell.innerHTML = '';
+                cell.classList.add('occupied');
+                
+                const div = document.createElement('div');
+                div.className = 'piece-in-cell';
+                div.dataset.type = type;
+                div.style.backgroundImage = `url(${this.pieceImages[type]})`;
+                cell.appendChild(div);
+            }
+
+            removeFromBoard(index) {
+                if (index == this.startCell || index == this.endCell) return;
+                this.board[index] = null;
+                const cell = document.querySelector(`.board-cell[data-index="${index}"]`);
+                cell.innerHTML = '';
+                cell.classList.remove('occupied');
             }
 
             loadLevel(level) {
-                if (level < 1 || level > this.totalLevels) return;
+                if (level > this.totalLevels) {
+                    this.showFinalScore();
+                    return;
+                }
                 
                 this.currentLevel = level;
                 this.currentScore = 10;
                 this.timeLeft = 300;
                 this.board = Array(this.totalPieces).fill(null);
                 this.gameStarted = false;
-                this.gameCompleted = false;
-                this.canMovePieces = false;
-                // เมื่อเข้าสู่ด่านใหม่ กำหนดสิ่งกีดขวางแบบสุ่มเล็กน้อยแต่ไม่ทับเส้นทางเฉลย
-                // คำนวณเฉลยคร่าว ๆ สำหรับด่านปัจจุบันเพื่อหลีกเลี่ยงการวางสิ่งกีดขวางบนเส้นทางนี้
-                // หากยังไม่มีเฉลยใน this.solutions จะถูกสร้างขึ้นโดย computeSolution()
-                this.computeSolution();
-                const solutionPath = this.solutions[this.currentLevel - 1].path || [];
+                
+                // === แก้ไขบั๊ก Level 7: กำหนด Start/End ก่อนการคำนวณ Obstacles ===
+                const levelConfig = this.levels[level-1];
+                if (levelConfig.start !== undefined && levelConfig.end !== undefined) {
+                    this.startCell = levelConfig.start;
+                    this.endCell = levelConfig.end;
+                } else {
+                    // Fallback random (ไม่น่าจะใช้ถ้า config ครบ)
+                    this.startCell = 0; 
+                    this.endCell = 35;
+                }
+
+                // คำนวณเส้นทางเฉลยเพื่อหลีกเลี่ยงการวางสิ่งกีดขวางทับเส้นทาง
+                const solutionPath = this.computeSimplePath(this.startCell, this.endCell);
+                
+                // สุ่มสิ่งกีดขวาง โดยไม่ทับ Start, End และเส้นทางเฉลย
+                this.obstacles = [];
                 const available = [];
                 for (let i = 0; i < this.totalPieces; i++) {
                     if (i !== this.startCell && i !== this.endCell && !solutionPath.includes(i)) {
                         available.push(i);
                     }
                 }
-                // สุ่มเลือกสิ่งกีดขวาง 1-2 จุด (ไม่มากเกินไป) และไม่ทับเส้นทางเฉลย
-                const obstacles = [];
-                const maxObstacles = Math.min(available.length, 2);
-                for (let i = 0; i < maxObstacles; i++) {
-                    const randIndex = Math.floor(Math.random() * available.length);
-                    obstacles.push(available[randIndex]);
-                    available.splice(randIndex, 1);
+                // สุ่ม 2-4 จุด
+                const obstacleCount = Math.floor(Math.random() * 3) + 2; 
+                for (let i = 0; i < obstacleCount; i++) {
+                    if (available.length > 0) {
+                        const idx = Math.floor(Math.random() * available.length);
+                        this.obstacles.push(available[idx]);
+                        available.splice(idx, 1);
+                    }
                 }
-                this.obstacles = obstacles;
-                this.levels[level-1].obstacles = obstacles;
-                
-                // กำหนดจุดเริ่มต้นและจุดสิ้นสุด ถ้ามีระบุไว้ในข้อมูลด่าน ให้ใช้ค่าที่กำหนด
-                if (this.levels[level-1].start !== undefined && this.levels[level-1].end !== undefined) {
-                    this.startCell = this.levels[level-1].start;
-                    this.endCell = this.levels[level-1].end;
-                } else {
-                    // ถ้าไม่ได้กำหนด ให้สุ่มตำแหน่งที่ไม่ใช่แถวบนสุดหรือล่างสุด
-                    do {
-                        this.startCell = Math.floor(Math.random() * (this.totalPieces - this.boardSize * 2)) + this.boardSize;
-                        this.endCell = Math.floor(Math.random() * (this.totalPieces - this.boardSize * 2)) + this.boardSize;
-                    } while (
-                        this.startCell === this.endCell || 
-                        Math.floor(this.startCell / this.boardSize) === 0 || 
-                        Math.floor(this.startCell / this.boardSize) === this.boardSize - 1 ||
-                        Math.floor(this.endCell / this.boardSize) === 0 || 
-                        Math.floor(this.endCell / this.boardSize) === this.boardSize - 1
-                    );
-                }
-                
-                // Place valve at start and faucet at end
-                this.board[this.startCell] = 'valve';
-                this.board[this.endCell] = 'faucet';
-                
+
                 // Update UI
                 document.getElementById('currentLevel').textContent = this.currentLevel;
-                document.getElementById('levelName').textContent = this.levels[level-1].name;
-                document.getElementById('currentScore').textContent = this.currentScore;
+                document.getElementById('totalScore').textContent = this.totalScore;
                 document.getElementById('timeLeft').textContent = '05:00';
-                document.getElementById('timerDisplay').classList.remove('timer-warning');
                 document.getElementById('testSystemBtn').disabled = true;
                 
-                // Clear previous timer
                 if (this.timer) clearInterval(this.timer);
                 
-                // Generate game board
-                this.generateBoardGrid();
-                this.generatePuzzlePieces();
-
-                // แสดงข้อความให้ผู้เล่นกดเริ่มเกมเมื่อโหลดกระดานเสร็จ
-                setTimeout(() => {
-                    this.showStartPrompt();
-                }, 0);
+                this.renderBoard();
+                this.renderPalette();
+                this.showStartOverlay();
             }
 
-            startGame() {
-                if (this.gameStarted) return;
-
-                this.gameStarted = true;
-                this.canMovePieces = true;
-                // เปิดปุ่มทดสอบระบบน้ำเมื่อเริ่มเกม
-                document.getElementById('testSystemBtn').disabled = false;
-
-                // เริ่มจับเวลานับถอยหลัง
-                this.timer = setInterval(() => {
-                    this.timeLeft--;
-                    this.updateTimerDisplay();
-                    
-                    if (this.timeLeft <= 0) {
-                        clearInterval(this.timer);
-                        this.showErrorMessage('เวลาเล่นหมดแล้ว!');
-                        this.canMovePieces = false;
-                    }
-                }, 1000);
-            }
-
-            generateBoardGrid() {
-                const boardGrid = document.getElementById('boardGrid');
-                boardGrid.innerHTML = '';
+            renderBoard() {
+                const grid = document.getElementById('boardGrid');
+                grid.innerHTML = '';
                 
-                // Create cells
                 for (let i = 0; i < this.totalPieces; i++) {
                     const cell = document.createElement('div');
                     cell.className = 'board-cell';
                     cell.dataset.index = i;
                     
-                    // Add obstacles
                     if (this.obstacles.includes(i)) {
                         cell.classList.add('obstacle');
-                        cell.innerHTML = '';
-                    }
-                    // Add valve (start point)
-                    else if (i === this.startCell) {
-                        const pieceInCell = document.createElement('div');
-                        pieceInCell.className = 'piece-in-cell';
-                        pieceInCell.dataset.type = 'valve';
-                        pieceInCell.style.backgroundImage = `url(${this.createValveImage()})`;
-                        cell.appendChild(pieceInCell);
+                    } else if (i === this.startCell) {
                         cell.classList.add('occupied');
-                        
-                        const startPoint = document.createElement('div');
-                        startPoint.className = 'start-point';
-                        startPoint.textContent = 'Start';
-                        pieceInCell.appendChild(startPoint);
-                    }
-                    // Add faucet (end point)
-                    else if (i === this.endCell) {
-                        const pieceInCell = document.createElement('div');
-                        pieceInCell.className = 'piece-in-cell';
-                        pieceInCell.dataset.type = 'faucet';
-                        pieceInCell.style.backgroundImage = `url(${this.createFaucetImage()})`;
-                        cell.appendChild(pieceInCell);
+                        this.board[i] = 'valve';
+                        const p = document.createElement('div');
+                        p.className = 'piece-in-cell';
+                        p.dataset.type = 'valve';
+                        p.style.backgroundImage = `url(${this.pieceImages['valve']})`;
+                        cell.appendChild(p);
+                    } else if (i === this.endCell) {
                         cell.classList.add('occupied');
-                        
-                        const endPoint = document.createElement('div');
-                        endPoint.className = 'end-point';
-                        endPoint.textContent = 'End';
-                        pieceInCell.appendChild(endPoint);
+                        this.board[i] = 'faucet';
+                        const p = document.createElement('div');
+                        p.className = 'piece-in-cell';
+                        p.dataset.type = 'faucet';
+                        p.style.backgroundImage = `url(${this.pieceImages['faucet']})`;
+                        cell.appendChild(p);
                     }
                     
-                    boardGrid.appendChild(cell);
+                    grid.appendChild(cell);
                 }
             }
 
-            generatePuzzlePieces() {
-                const piecesContainer = document.getElementById('piecesContainer');
-                piecesContainer.innerHTML = '';
+            renderPalette() {
+                const container = document.getElementById('piecesContainer');
+                container.innerHTML = '';
                 
-                // Create pipe pieces
-                const pipeTypes = ['straight-vertical', 'straight-horizontal', 'left-top', 'right-top', 'left-bottom', 'right-bottom'];
-                for (const type of pipeTypes) {
+                Object.keys(this.pieceTypes).forEach(type => {
                     const piece = document.createElement('div');
                     piece.className = 'puzzle-piece';
-                    piece.draggable = true;
                     piece.dataset.type = type;
-                    piece.style.backgroundImage = `url(${this.pieceTypes[type].image})`;
-                    piece.title = this.pieceTypes[type].name;
-                    piecesContainer.appendChild(piece);
-                }
-                
-                // Add trash bin
-                const trashBin = document.createElement('div');
-                trashBin.className = 'trash-bin';
-                trashBin.id = 'trashBin';
-                piecesContainer.appendChild(trashBin);
-
-                // Attach drag events to the new trash bin so that pieces can always be removed
-                trashBin.addEventListener('dragover', (e) => {
-                    e.preventDefault();
-                    trashBin.classList.add('highlight');
-                });
-                trashBin.addEventListener('dragleave', () => {
-                    trashBin.classList.remove('highlight');
-                });
-                trashBin.addEventListener('drop', (e) => {
-                    e.preventDefault();
-                    trashBin.classList.remove('highlight');
-                    const fromCell = e.dataTransfer.getData('fromCell');
-                    if (fromCell) {
-                        this.returnPieceToContainer(fromCell);
-                    }
+                    piece.style.backgroundImage = `url(${this.pieceImages[type]})`;
+                    container.appendChild(piece);
                 });
             }
 
-            handleDragStart(e) {
-                // Ignore drag start if game not in moveable state
-                if (!this.canMovePieces) return;
-                // Determine what is being dragged. It could be a palette piece, a piece-in-cell,
-                // a board cell containing a piece, or a child element within a piece (like the "Start/End" label).
-                let dragTarget = e.target;
-                // If the clicked element is inside a placed piece, climb up to the .piece-in-cell element
-                const pieceParent = dragTarget.closest('.piece-in-cell');
-                if (pieceParent) {
-                    dragTarget = pieceParent;
-                }
-                // If user grabs anywhere on a board cell that contains a piece, treat as dragging that piece
-                else if (dragTarget.classList.contains('board-cell') && dragTarget.querySelector('.piece-in-cell')) {
-                    dragTarget = dragTarget.querySelector('.piece-in-cell');
-                }
-                // Only allow dragging of palette pieces or pieces placed on the board
-                if (!dragTarget.classList.contains('puzzle-piece') && !dragTarget.classList.contains('piece-in-cell')) {
-                    return;
-                }
-                e.dataTransfer.setData('type', dragTarget.dataset.type);
-                // If the dragged element is from the board, record its cell index
-                if (dragTarget.classList.contains('piece-in-cell')) {
-                    e.dataTransfer.setData('fromCell', dragTarget.parentElement.dataset.index);
-                }
-                dragTarget.classList.add('dragging');
-            }
-
-            handleDragOver(e) {
-                if (!this.canMovePieces) return;
-                
-                if (e.target.classList.contains('board-cell') && !e.target.classList.contains('obstacle')) {
-                    e.preventDefault();
-                    e.target.classList.add('drag-over');
-                }
-            }
-
-            handleDragLeave(e) {
-                if (e.target.classList.contains('board-cell')) {
-                    e.target.classList.remove('drag-over');
-                }
-            }
-
-            handleDrop(e) {
-                if (!this.canMovePieces) return;
-                
-                let dropTarget = e.target;
-                
-                // If dropped on piece in cell, use parent (cell) as target
-                if (dropTarget.classList.contains('piece-in-cell')) {
-                    dropTarget = dropTarget.parentElement;
-                }
-                
-                // If dropped on board cell
-                if (dropTarget.classList.contains('board-cell') && !dropTarget.classList.contains('obstacle')) {
-                    e.preventDefault();
-                    dropTarget.classList.remove('drag-over');
-                    
-                    const pieceType = e.dataTransfer.getData('type');
-                    const fromCell = e.dataTransfer.getData('fromCell');
-                    const toCell = dropTarget.dataset.index;
-                    
-                    // Can't replace valve or faucet
-                    if (toCell == this.startCell || toCell == this.endCell) {
-                        this.showErrorMessage('ไม่สามารถเปลี่ยนชิ้นส่วนจุดเริ่มต้นหรือจุดสิ้นสุดได้');
-                        return;
-                    }
-                    
-                    // If moving from one cell to another
-                    if (fromCell) {
-                        this.movePieceBetweenCells(fromCell, toCell);
-                    } 
-                    // If placing new piece from pieces container
-                    else {
-                        this.placeNewPiece(pieceType, toCell);
-                    }
-                }
-            }
-
-            handleDragEnd(e) {
-                // Remove dragging class from all elements
-                document.querySelectorAll('.dragging').forEach(el => {
-                    el.classList.remove('dragging');
-                });
-                
-                // Remove drag-over class from all cells
-                document.querySelectorAll('.drag-over').forEach(el => {
-                    el.classList.remove('drag-over');
-                });
-            }
-
-            movePieceBetweenCells(fromCellIndex, toCellIndex) {
-                if (fromCellIndex === toCellIndex) return;
-                
-                const fromCell = document.querySelector(`.board-cell[data-index="${fromCellIndex}"]`);
-                const toCell = document.querySelector(`.board-cell[data-index="${toCellIndex}"]`);
-                const piece = fromCell.querySelector('.piece-in-cell');
-                
-                if (!piece) return;
-                
-                // If target cell has a piece, move it to original cell
-                if (toCell.querySelector('.piece-in-cell')) {
-                    const pieceToMove = toCell.querySelector('.piece-in-cell');
-                    fromCell.innerHTML = '';
-                    fromCell.appendChild(pieceToMove);
-                    this.board[fromCellIndex] = this.board[toCellIndex];
-                } else {
-                    fromCell.innerHTML = '';
-                    this.board[fromCellIndex] = null;
-                    fromCell.classList.remove('occupied');
-                }
-                
-                // Move piece to target cell
-                toCell.innerHTML = '';
-                toCell.appendChild(piece);
-                this.board[toCellIndex] = piece.dataset.type;
-                toCell.classList.add('occupied');
-            }
-
-            placeNewPiece(pieceType, cellIndex) {
-                const cell = document.querySelector(`.board-cell[data-index="${cellIndex}"]`);
-                
-                // Can't replace valve or faucet
-                if (cellIndex == this.startCell || cellIndex == this.endCell) {
-                    this.showErrorMessage('ไม่สามารถเปลี่ยนชิ้นส่วนจุดเริ่มต้นหรือจุดสิ้นสุดได้');
-                    return;
-                }
-                
-                // If target cell has a piece, return it to pieces container
-                if (cell.querySelector('.piece-in-cell')) {
-                    this.returnPieceToContainer(cellIndex);
-                }
-                
-                // Place new piece
-                this.board[cellIndex] = pieceType;
-                
-                const pieceInCell = document.createElement('div');
-                pieceInCell.className = 'piece-in-cell';
-                pieceInCell.dataset.type = pieceType;
-                pieceInCell.style.backgroundImage = `url(${this.pieceTypes[pieceType].image})`;
-                pieceInCell.draggable = true;
-                
-                cell.innerHTML = '';
-                cell.appendChild(pieceInCell);
-                cell.classList.add('occupied');
-            }
-
-            returnPieceToContainer(cellIndex) {
-                const cell = document.querySelector(`.board-cell[data-index="${cellIndex}"]`);
-                const pieceInCell = cell.querySelector('.piece-in-cell');
-                
-                if (pieceInCell && cellIndex != this.startCell && cellIndex != this.endCell) {
-                    this.board[cellIndex] = null;
-                    cell.innerHTML = '';
-                    cell.classList.remove('occupied');
-                }
-            }
-
-            testSystem() {
-                // Run the system step by step, highlighting each piece as water flows.
-                // Disable piece movement during testing
-                if (!this.gameStarted || this.gameCompleted) return;
-                this.canMovePieces = false;
-
-                // Clear previous highlights
-                document.querySelectorAll('.board-cell').forEach(cell => {
-                    cell.classList.remove('incorrect', 'correct');
-                });
-
-                let currentCell = this.startCell;
-                let fromDirection = null;
-
-                const step = () => {
-                    const cellElement = document.querySelector(`.board-cell[data-index="${currentCell}"]`);
-                    if (cellElement) {
-                        cellElement.classList.add('correct');
-                    }
-                    const pieceType = this.board[currentCell];
-                    // Empty cell (no pipe)
-                    if (!pieceType) {
-                        if (cellElement) cellElement.classList.add('incorrect');
-                        this.showErrorMessage('ระบบท่อน้ำไม่ถูกต้อง กรุณาลองใหม่');
-                        return;
-                    }
-                    // End reached
-                    if (pieceType === 'faucet') {
-                        setTimeout(() => {
-                            // Use the improved water flow animation that follows
-                            // the actual pipe layout
-                            this.showWaterFlowNew();
-                        }, 300);
-                        return;
-                    }
-                    let nextDirection = null;
-                    if (pieceType === 'valve') {
-                        // For the valve, determine which adjacent cell has a pipe
-                        const row = Math.floor(currentCell / this.boardSize);
-                        const col = currentCell % this.boardSize;
-                        const candidates = [];
-                        if (row > 0 && this.board[currentCell - this.boardSize]) {
-                            candidates.push('top');
-                        }
-                        if (row < this.boardSize - 1 && this.board[currentCell + this.boardSize]) {
-                            candidates.push('bottom');
-                        }
-                        if (col > 0 && this.board[currentCell - 1]) {
-                            candidates.push('left');
-                        }
-                        if (col < this.boardSize - 1 && this.board[currentCell + 1]) {
-                            candidates.push('right');
-                        }
-                        // Must have exactly one connection from the valve
-                        if (candidates.length !== 1) {
-                            if (cellElement) cellElement.classList.add('incorrect');
-                            this.showErrorMessage('จุดเริ่มต้นต้องต่อท่อหนึ่งชิ้นเท่านั้น');
-                            return;
-                        }
-                        nextDirection = candidates[0];
-                    } else {
-                        // For pipe pieces, validate connections
-                        const connections = this.pieceTypes[pieceType].connections;
-                        // If no incoming direction defined, deduce one based on adjacent pipes
-                        if (fromDirection === null) {
-                            const row = Math.floor(currentCell / this.boardSize);
-                            const col = currentCell % this.boardSize;
-                            const possibleFrom = [];
-                            if (row > 0 && this.board[currentCell - this.boardSize]) possibleFrom.push('top');
-                            if (row < this.boardSize - 1 && this.board[currentCell + this.boardSize]) possibleFrom.push('bottom');
-                            if (col > 0 && this.board[currentCell - 1]) possibleFrom.push('left');
-                            if (col < this.boardSize - 1 && this.board[currentCell + 1]) possibleFrom.push('right');
-                            for (const dir of possibleFrom) {
-                                if (connections.includes(dir)) {
-                                    fromDirection = dir;
-                                    break;
-                                }
-                            }
-                            if (fromDirection === null) {
-                                if (cellElement) cellElement.classList.add('incorrect');
-                                this.showErrorMessage('ระบบท่อน้ำไม่ถูกต้อง กรุณาลองใหม่');
-                                return;
-                            }
-                        }
-                        if (!connections.includes(fromDirection)) {
-                            if (cellElement) cellElement.classList.add('incorrect');
-                            this.showErrorMessage('ระบบท่อน้ำไม่ถูกต้อง กรุณาลองใหม่');
-                            return;
-                        }
-                        const possible = connections.filter(dir => dir !== fromDirection);
-                        if (possible.length === 0) {
-                            if (cellElement) cellElement.classList.add('incorrect');
-                            this.showErrorMessage('ระบบท่อน้ำไม่ถูกต้อง กรุณาลองใหม่');
-                            return;
-                        }
-                        nextDirection = possible[0];
-                    }
-                    // Determine next cell based on direction
-                    let nextCell = null;
-                    let newFrom = null;
-                    const r = Math.floor(currentCell / this.boardSize);
-                    const c = currentCell % this.boardSize;
-                    switch (nextDirection) {
-                        case 'top':
-                            if (r === 0) {
-                                if (cellElement) cellElement.classList.add('incorrect');
-                                this.showErrorMessage('ระบบท่อน้ำไม่ถูกต้อง กรุณาลองใหม่');
-                                return;
-                            }
-                            nextCell = currentCell - this.boardSize;
-                            newFrom = 'bottom';
-                            break;
-                        case 'bottom':
-                            if (r === this.boardSize - 1) {
-                                if (cellElement) cellElement.classList.add('incorrect');
-                                this.showErrorMessage('ระบบท่อน้ำไม่ถูกต้อง กรุณาลองใหม่');
-                                return;
-                            }
-                            nextCell = currentCell + this.boardSize;
-                            newFrom = 'top';
-                            break;
-                        case 'left':
-                            if (c === 0) {
-                                if (cellElement) cellElement.classList.add('incorrect');
-                                this.showErrorMessage('ระบบท่อน้ำไม่ถูกต้อง กรุณาลองใหม่');
-                                return;
-                            }
-                            nextCell = currentCell - 1;
-                            newFrom = 'right';
-                            break;
-                        case 'right':
-                            if (c === this.boardSize - 1) {
-                                if (cellElement) cellElement.classList.add('incorrect');
-                                this.showErrorMessage('ระบบท่อน้ำไม่ถูกต้อง กรุณาลองใหม่');
-                                return;
-                            }
-                            nextCell = currentCell + 1;
-                            newFrom = 'left';
-                            break;
-                        default:
-                            return;
-                    }
-                    currentCell = nextCell;
-                    fromDirection = newFrom;
-                    setTimeout(step, 300);
-                };
-                step();
-            }
-
-            checkPath() {
-                const visited = new Set();
-                let currentCell = this.startCell;
-                let fromDirection = 'top'; // Water comes from top to valve
-                const pathCells = [];
-                const incorrectCells = [];
-                
-                while (true) {
-                    pathCells.push(currentCell);
-                    
-                    // Get piece type at current cell
-                    const pieceType = this.board[currentCell];
-                    if (!pieceType) {
-                        incorrectCells.push(currentCell);
-                        return { isValid: false, pathCells, incorrectCells }; // Empty cell
-                    }
-                    
-                    // Check if we've reached the faucet
-                    if (pieceType === 'faucet') {
-                        // Faucet must have connection from top
-                        if (fromDirection !== 'top') {
-                            incorrectCells.push(currentCell);
-                            return { isValid: false, pathCells, incorrectCells };
-                        }
-                        return { isValid: true, pathCells, incorrectCells: [] };
-                    }
-                    
-                    // Get piece connections
-                    let connections;
-                    if (pieceType === 'valve') {
-                        connections = ['bottom']; // Valve only connects to bottom
-                    } else if (pieceType === 'faucet') {
-                        connections = []; // Shouldn't reach here
-                    } else {
-                        connections = this.pieceTypes[pieceType].connections;
-                    }
-                    
-                    // Check if piece has connection from incoming direction
-                    if (!connections.includes(fromDirection)) {
-                        incorrectCells.push(currentCell);
-                        return { isValid: false, pathCells, incorrectCells };
-                    }
-                    
-                    // Determine next direction (exclude incoming direction)
-                    const possibleDirections = connections.filter(dir => dir !== fromDirection);
-                    if (possibleDirections.length === 0) {
-                        incorrectCells.push(currentCell);
-                        return { isValid: false, pathCells, incorrectCells }; // Dead end
-                    }
-                    const nextDirection = possibleDirections[0];
-                    
-                    // Move to next cell based on direction
-                    let nextCell;
-                    const row = Math.floor(currentCell / this.boardSize);
-                    const col = currentCell % this.boardSize;
-                    
-                    switch (nextDirection) {
-                        case 'top':
-                            if (row === 0) {
-                                incorrectCells.push(currentCell);
-                                return { isValid: false, pathCells, incorrectCells }; // Can't go up from top row
-                            }
-                            nextCell = currentCell - this.boardSize;
-                            fromDirection = 'bottom';
-                            break;
-                        case 'bottom':
-                            if (row === this.boardSize - 1) {
-                                incorrectCells.push(currentCell);
-                                return { isValid: false, pathCells, incorrectCells }; // Can't go down from bottom row
-                            }
-                            nextCell = currentCell + this.boardSize;
-                            fromDirection = 'top';
-                            break;
-                        case 'left':
-                            if (col === 0) {
-                                incorrectCells.push(currentCell);
-                                return { isValid: false, pathCells, incorrectCells }; // Can't go left from first column
-                            }
-                            nextCell = currentCell - 1;
-                            fromDirection = 'right';
-                            break;
-                        case 'right':
-                            if (col === this.boardSize - 1) {
-                                incorrectCells.push(currentCell);
-                                return { isValid: false, pathCells, incorrectCells }; // Can't go right from last column
-                            }
-                            nextCell = currentCell + 1;
-                            fromDirection = 'left';
-                            break;
-                    }
-                    
-                    // Check if next cell is occupied and not visited
-                    if (!this.board[nextCell] || visited.has(nextCell)) {
-                        incorrectCells.push(currentCell);
-                        return { isValid: false, pathCells, incorrectCells };
-                    }
-                    
-                    currentCell = nextCell;
-                }
-            }
-
-            showWaterFlow() {
-                this.canMovePieces = false;
-                const visited = new Set();
-                let currentCell = this.startCell;
-                let fromDirection = 'top';
-                const flowElements = [];
-                const boardGrid = document.getElementById('boardGrid');
-                
-                const animateFlow = () => {
-                    if (currentCell === undefined) {
-                        // Animation complete
-                        this.levelCompleted();
-                        return;
-                    }
-                    
-                    visited.add(currentCell);
-                    
-                    // Highlight current cell
-                    const cellElement = document.querySelector(`.board-cell[data-index="${currentCell}"]`);
-                    if (cellElement) {
-                        cellElement.classList.add('correct');
-                        
-                        // Create water flow element
-                        const flow = document.createElement('div');
-                        flow.className = 'water-flow';
-                        
-                        // Position flow element based on direction
-                        const cellRect = cellElement.getBoundingClientRect();
-                        const gridRect = boardGrid.getBoundingClientRect();
-                        
-                        let left, top, width, height;
-                        
-                        const pieceType = this.board[currentCell];
-                        
-                        if (pieceType === 'valve') {
-                            // Valve - vertical flow down
-                            left = cellRect.left - gridRect.left + cellRect.width / 4;
-                            top = cellRect.top - gridRect.top + cellRect.height / 2;
-                            width = cellRect.width / 2;
-                            height = cellRect.height / 2;
-                        }
-                        else if (pieceType === 'faucet') {
-                            // Faucet - water pouring down
-                            left = cellRect.left - gridRect.left + cellRect.width / 4;
-                            top = cellRect.top - gridRect.top + cellRect.height / 2;
-                            width = cellRect.width / 2;
-                            height = cellRect.height / 2;
-                            
-                            // Add animation for water filling
-                            const tankFill = document.createElement('div');
-                            tankFill.className = 'water-flow';
-                            tankFill.style.left = `${cellRect.left - gridRect.left}px`;
-                            tankFill.style.top = `${cellRect.top - gridRect.top + cellRect.height}px`;
-                            tankFill.style.width = `${cellRect.width}px`;
-                            tankFill.style.height = '0px';
-                            tankFill.style.backgroundColor = 'rgba(0, 168, 255, 0.7)';
-                            tankFill.style.transition = 'height 2s ease-out';
-                            
-                            boardGrid.appendChild(tankFill);
-                            setTimeout(() => {
-                                tankFill.style.height = '50px';
-                            }, 100);
-                            
-                            flowElements.push(tankFill);
-                        }
-                        else {
-                            // Regular pipe pieces
-                            const connections = this.pieceTypes[pieceType].connections;
-                            
-                            if (connections.includes('top') && connections.includes('bottom')) {
-                                // Vertical pipe
-                                left = cellRect.left - gridRect.left + cellRect.width / 4;
-                                top = cellRect.top - gridRect.top;
-                                width = cellRect.width / 2;
-                                height = cellRect.height;
-                            }
-                            else if (connections.includes('left') && connections.includes('right')) {
-                                // Horizontal pipe
-                                left = cellRect.left - gridRect.left;
-                                top = cellRect.top - gridRect.top + cellRect.height / 4;
-                                width = cellRect.width;
-                                height = cellRect.height / 2;
-                            }
-                            else if (connections.includes('top') && connections.includes('left')) {
-                                // Top-left curve
-                                left = cellRect.left - gridRect.left;
-                                top = cellRect.top - gridRect.top;
-                                width = cellRect.width;
-                                height = cellRect.height;
-                            }
-                            else if (connections.includes('top') && connections.includes('right')) {
-                                // Top-right curve
-                                left = cellRect.left - gridRect.left;
-                                top = cellRect.top - gridRect.top;
-                                width = cellRect.width;
-                                height = cellRect.height;
-                            }
-                            else if (connections.includes('bottom') && connections.includes('left')) {
-                                // Bottom-left curve
-                                left = cellRect.left - gridRect.left;
-                                top = cellRect.top - gridRect.top;
-                                width = cellRect.width;
-                                height = cellRect.height;
-                            }
-                            else if (connections.includes('bottom') && connections.includes('right')) {
-                                // Bottom-right curve
-                                left = cellRect.left - gridRect.left;
-                                top = cellRect.top - gridRect.top;
-                                width = cellRect.width;
-                                height = cellRect.height;
-                            }
-                        }
-                        
-                        if (left !== undefined) {
-                            flow.style.left = `${left}px`;
-                            flow.style.top = `${top}px`;
-                            flow.style.width = `${width}px`;
-                            flow.style.height = `${height}px`;
-                            
-                            boardGrid.appendChild(flow);
-                            flowElements.push(flow);
-                        }
-                    }
-                    
-                    // Get piece type at current cell
-                    const pieceType = this.board[currentCell];
-                    if (!pieceType) return;
-                    
-                    // Check if we've reached the faucet
-                    if (pieceType === 'faucet') {
-                        // Finish animation
-                        setTimeout(() => {
-                            flowElements.forEach(el => el.remove());
-                            currentCell = undefined;
-                            setTimeout(animateFlow, 500);
-                        }, 2000);
-                        return;
-                    }
-                    
-                    // Get piece connections
-                    let connections;
-                    if (pieceType === 'valve') {
-                        connections = ['bottom'];
-                    } else {
-                        connections = this.pieceTypes[pieceType].connections;
-                    }
-                    
-                    // Determine next direction (exclude incoming direction)
-                    const possibleDirections = connections.filter(dir => dir !== fromDirection);
-                    if (possibleDirections.length === 0) return;
-                    const nextDirection = possibleDirections[0];
-                    
-                    // Move to next cell based on direction
-                    let nextCell;
-                    const row = Math.floor(currentCell / this.boardSize);
-                    const col = currentCell % this.boardSize;
-                    
-                    switch (nextDirection) {
-                        case 'top':
-                            nextCell = currentCell - this.boardSize;
-                            fromDirection = 'bottom';
-                            break;
-                        case 'bottom':
-                            nextCell = currentCell + this.boardSize;
-                            fromDirection = 'top';
-                            break;
-                        case 'left':
-                            nextCell = currentCell - 1;
-                            fromDirection = 'right';
-                            break;
-                        case 'right':
-                            nextCell = currentCell + 1;
-                            fromDirection = 'left';
-                            break;
-                    }
-                    
-                    currentCell = nextCell;
-                    setTimeout(animateFlow, 500);
-                };
-                
-                animateFlow();
-            }
-
-            /**
-             * New water flow animation that determines the path dynamically based
-             * on adjacent pieces. This allows water to flow from the valve in
-             * any direction and properly traverses curved pipes. Each cell
-             * visited along the path is highlighted and a translucent overlay
-             * simulates the flow of water. When the faucet is reached the
-             * level is marked complete.
-             */
-            showWaterFlowNew() {
-                // Disallow moving pieces during the animation
-                this.canMovePieces = false;
-                const visited = new Set();
-                let currentCell = this.startCell;
-                let fromDirection = null;
-                const flowElements = [];
-                const boardGrid = document.getElementById('boardGrid');
-                const opposite = { top: 'bottom', bottom: 'top', left: 'right', right: 'left' };
-
-                // Determine the initial incoming direction by finding the single
-                // adjacent pipe connected to the valve. The direction we find
-                // here is the incoming direction to the next cell, not the
-                // direction of travel from the valve itself.
-                const findInitialIncoming = () => {
-                    const dirs = ['top', 'bottom', 'left', 'right'];
-                    const row = Math.floor(this.startCell / this.boardSize);
-                    const col = this.startCell % this.boardSize;
-                    for (const dir of dirs) {
-                        let adjIdx;
-                        switch (dir) {
-                            case 'top':
-                                if (row > 0) adjIdx = this.startCell - this.boardSize;
-                                break;
-                            case 'bottom':
-                                if (row < this.boardSize - 1) adjIdx = this.startCell + this.boardSize;
-                                break;
-                            case 'left':
-                                if (col > 0) adjIdx = this.startCell - 1;
-                                break;
-                            case 'right':
-                                if (col < this.boardSize - 1) adjIdx = this.startCell + 1;
-                                break;
-                        }
-                        if (adjIdx !== undefined && this.board[adjIdx]) {
-                            return opposite[dir];
-                        }
-                    }
-                    return null;
-                };
-                fromDirection = findInitialIncoming();
-
-                // Helper: compute the next cell to travel to and what the incoming
-                // direction should be for that next cell, based on the current
-                // piece connections and the board layout.
-                const nextStep = (cellIdx, incomingDir) => {
-                    const row = Math.floor(cellIdx / this.boardSize);
-                    const col = cellIdx % this.boardSize;
-                    const pType = this.board[cellIdx];
-                    let connections = [];
-                    if (pType === 'valve' || pType === 'faucet') {
-                        connections = ['top', 'bottom', 'left', 'right'];
-                    } else if (this.pieceTypes[pType]) {
-                        connections = this.pieceTypes[pType].connections;
-                    }
-                    // Exclude the direction we came from
-                    const dirs = connections.filter(dir => dir !== incomingDir);
-                    for (const dir of dirs) {
-                        let nextIdx;
-                        switch (dir) {
-                            case 'top':
-                                if (row === 0) continue;
-                                nextIdx = cellIdx - this.boardSize;
-                                break;
-                            case 'bottom':
-                                if (row === this.boardSize - 1) continue;
-                                nextIdx = cellIdx + this.boardSize;
-                                break;
-                            case 'left':
-                                if (col === 0) continue;
-                                nextIdx = cellIdx - 1;
-                                break;
-                            case 'right':
-                                if (col === this.boardSize - 1) continue;
-                                nextIdx = cellIdx + 1;
-                                break;
-                        }
-                        if (this.board[nextIdx]) {
-                            return { nextCell: nextIdx, nextIncoming: opposite[dir] };
-                        }
-                    }
-                    return { nextCell: undefined, nextIncoming: null };
-                };
-
-                const animateFlow = () => {
-                    if (currentCell === undefined) {
-                        // End of animation
-                        this.levelCompleted();
-                        return;
-                    }
-                    visited.add(currentCell);
-                    const cellElement = document.querySelector(`.board-cell[data-index="${currentCell}"]`);
-                    if (cellElement) {
-                        cellElement.classList.add('correct');
-                        // Draw a translucent overlay representing water in this cell
-                        const flow = document.createElement('div');
-                        flow.className = 'water-flow';
-                        const cellRect = cellElement.getBoundingClientRect();
-                        const gridRect = boardGrid.getBoundingClientRect();
-                        let left, top, width, height;
-                        const pType = this.board[currentCell];
-                        if (pType === 'valve' || pType === 'faucet') {
-                            left = cellRect.left - gridRect.left + cellRect.width / 4;
-                            top = cellRect.top - gridRect.top + cellRect.height / 4;
-                            width = cellRect.width / 2;
-                            height = cellRect.height / 2;
-                        } else {
-                            const conns = this.pieceTypes[pType].connections;
-                            if (conns.includes('top') && conns.includes('bottom')) {
-                                left = cellRect.left - gridRect.left + cellRect.width / 4;
-                                top = cellRect.top - gridRect.top;
-                                width = cellRect.width / 2;
-                                height = cellRect.height;
-                            } else if (conns.includes('left') && conns.includes('right')) {
-                                left = cellRect.left - gridRect.left;
-                                top = cellRect.top - gridRect.top + cellRect.height / 4;
-                                width = cellRect.width;
-                                height = cellRect.height / 2;
-                            } else {
-                                left = cellRect.left - gridRect.left;
-                                top = cellRect.top - gridRect.top;
-                                width = cellRect.width;
-                                height = cellRect.height;
-                            }
-                        }
-                        if (left !== undefined) {
-                            flow.style.left = `${left}px`;
-                            flow.style.top = `${top}px`;
-                            flow.style.width = `${width}px`;
-                            flow.style.height = `${height}px`;
-                            boardGrid.appendChild(flow);
-                            flowElements.push(flow);
-                        }
-                    }
-                    const pType2 = this.board[currentCell];
-                    if (!pType2) {
-                        currentCell = undefined;
-                        setTimeout(animateFlow, 500);
-                        return;
-                    }
-                    if (pType2 === 'faucet') {
-                        // Brief pause then finish when water reaches the faucet
-                        setTimeout(() => {
-                            flowElements.forEach(el => el.remove());
-                            currentCell = undefined;
-                            setTimeout(animateFlow, 500);
-                        }, 800);
-                        return;
-                    }
-                    const { nextCell, nextIncoming } = nextStep(currentCell, fromDirection);
-                    if (nextCell === undefined) {
-                        currentCell = undefined;
-                        setTimeout(animateFlow, 500);
-                        return;
-                    }
-                    currentCell = nextCell;
-                    fromDirection = nextIncoming;
-                    setTimeout(animateFlow, 500);
-                };
-                animateFlow();
-            }
-
-            /**
-             * Compute a simple solution path for the current level. The path
-             * always moves vertically from the start cell towards the end row
-             * first, then horizontally towards the end column. Appropriate
-             * pipe types are placed in each intermediate cell along the path.
-             * The resulting pipes and path arrays are stored in
-             * this.solutions for the current level so that showSolution() can
-             * display a coherent answer. If a solution already exists, it
-             * will be overwritten.
-             */
-            computeSolution() {
-                const pipes = Array(this.totalPieces).fill(null);
+            computeSimplePath(start, end) {
+                // คำนวณเส้นทางง่ายๆ (Manhattan) เพื่อใช้หลบสิ่งกีดขวาง
                 const path = [];
-                const startRow = Math.floor(this.startCell / this.boardSize);
-                const startCol = this.startCell % this.boardSize;
-                const endRow = Math.floor(this.endCell / this.boardSize);
-                const endCol = this.endCell % this.boardSize;
-
-                // Determine movement directions
-                const vDir = endRow > startRow ? 1 : (endRow < startRow ? -1 : 0);
-                const hDir = endCol > startCol ? 1 : (endCol < startCol ? -1 : 0);
-
-                let row = startRow;
-                let col = startCol;
-                // Always include the start cell
-                path.push(this.startCell);
-
-                // Move vertically until reaching the same row as the end
-                while (row !== endRow) {
-                    row += vDir;
-                    const idx = row * this.boardSize + col;
-                    path.push(idx);
-                    // If not the intersection row, place a vertical pipe
-                    if (row !== endRow) {
-                        pipes[idx] = 'straight-vertical';
-                    }
-                }
-
-                // At the intersection (same row as end). If horizontal movement is needed
-                if (hDir !== 0 && startRow !== endRow) {
-                    let cornerPiece = null;
-                    if (vDir === -1 && hDir === 1) {
-                        cornerPiece = 'right-bottom';
-                    } else if (vDir === -1 && hDir === -1) {
-                        cornerPiece = 'left-bottom';
-                    } else if (vDir === 1 && hDir === 1) {
-                        cornerPiece = 'right-top';
-                    } else if (vDir === 1 && hDir === -1) {
-                        cornerPiece = 'left-top';
-                    }
-                    const cornerIdx = row * this.boardSize + col;
-                    pipes[cornerIdx] = cornerPiece;
-                }
-
-                // Move horizontally towards the end column
-                while (col !== endCol) {
-                    col += hDir;
-                    const idx = row * this.boardSize + col;
-                    path.push(idx);
-                    // Place horizontal pipe if not at end cell
-                    if (idx !== this.endCell) {
-                        pipes[idx] = 'straight-horizontal';
-                    }
-                }
-
-                // Store result
-                this.solutions[this.currentLevel - 1] = { pipes, path };
-            }
-
-            /**
-             * Display an overlay prompting the player to start the level. When
-             * the player clicks the button, the game timer will start and
-             * the overlay will be removed. This function is called after
-             * loading or resetting a level to ensure the user explicitly
-             * begins play.
-             */
-            showStartPrompt() {
-                // Prevent multiple prompts
-                if (document.querySelector('.success-message')) return;
-                const message = document.createElement('div');
-                message.className = 'success-message';
-                message.innerHTML = `
-                    <div>พร้อมเล่น Level ${this.currentLevel}</div>
-                    <div>${this.levels[this.currentLevel-1].name}</div>
-                    <div class="message-button" onclick="game.startGame(); game.removeMessages();">เริ่มเกม</div>
-                `;
-                document.body.appendChild(message);
-            }
-
-            levelCompleted() {
-                clearInterval(this.timer);
-                this.gameCompleted = true;
+                let curr = start;
+                const endR = Math.floor(end / 6);
+                const endC = end % 6;
                 
-                // Add current score to total score
-                this.totalScore += this.currentScore;
-                document.getElementById('totalScore').textContent = this.totalScore;
-                
-                if (this.currentLevel === this.totalLevels) {
-                    this.showFinalScore();
-                } else {
-                    this.showSuccessMessage();
+                while (curr !== end) {
+                    let r = Math.floor(curr / 6);
+                    let c = curr % 6;
+                    
+                    if (r < endR) curr += 6;
+                    else if (r > endR) curr -= 6;
+                    else if (c < endC) curr += 1;
+                    else if (c > endC) curr -= 1;
+                    
+                    path.push(curr);
+                    if (path.length > 50) break; // กัน loop
                 }
+                return path;
             }
 
-            showSuccessMessage() {
-                const message = document.createElement('div');
-                message.className = 'success-message';
-                // Display a friendly success message and button to proceed to the next level
-                message.innerHTML = `
-                    <div>ระบบน้ำถูกต้อง</div>
-                    <div>คุณผ่าน Level ${this.currentLevel}</div>
-                    <div class="message-button" onclick="game.nextLevel()">ไป Level ${this.currentLevel + 1}</div>
-                `;
-                document.body.appendChild(message);
-            }
-
-            showErrorMessage(text) {
-                const message = document.createElement('div');
-                message.className = 'error-message';
-                message.innerHTML = `
-                    <div>${text}</div>
-                    <div class="message-button" onclick="game.removeMessages()">ตกลง</div>
-                `;
-                document.body.appendChild(message);
-            }
-
-            showFinalScore() {
-                const percentage = (this.totalScore / (this.totalLevels * 10)) * 100;
-                let grade = 'F';
-                
-                if (percentage >= 95) grade = 'A+';
-                else if (percentage >= 90) grade = 'A';
-                else if (percentage >= 85) grade = 'B+';
-                else if (percentage >= 80) grade = 'B';
-                else if (percentage >= 75) grade = 'C+';
-                else if (percentage >= 70) grade = 'C';
-                else if (percentage >= 60) grade = 'D';
-                
-                const message = document.createElement('div');
-                message.className = 'final-score-message';
-                message.innerHTML = `
-                    <div>ยินดีด้วย! คุณผ่านเกมทั้งหมดแล้ว</div>
-                    <div>คะแนนรวม: ${this.totalScore} / ${this.totalLevels * 10}</div>
-                    <div class="grade ${grade}">${grade}</div>
-                    <div class="message-button" onclick="game.goToFirstLevel()">เล่นอีกครั้ง</div>
-                `;
-                document.body.appendChild(message);
-            }
-
-            showSolution() {
-                // หากยังไม่มีเฉลยสำหรับด่านนี้ ให้สร้างด้วย computeSolution()
-                if (!this.solutions[this.currentLevel - 1] || !this.solutions[this.currentLevel - 1].pipes) {
-                    this.computeSolution();
-                }
+            showStartOverlay() {
+                this.canMovePieces = false;
                 const overlay = document.createElement('div');
-                overlay.className = 'solution-overlay';
-                
-                const content = document.createElement('div');
-                content.className = 'solution-content';
-                
-                const solutionBoard = document.createElement('div');
-                solutionBoard.className = 'solution-board';
-                
-                // Create solution cells
-                for (let i = 0; i < this.totalPieces; i++) {
-                    const cell = document.createElement('div');
-                    cell.className = 'solution-cell';
-                    
-                    // Add valve (start point)
-                    if (i === this.startCell) {
-                        const piece = document.createElement('div');
-                        piece.className = 'solution-piece';
-                        piece.style.backgroundImage = `url(${this.createValveImage()})`;
-                        cell.appendChild(piece);
-                        
-                        const startPoint = document.createElement('div');
-                        startPoint.className = 'start-point';
-                        startPoint.textContent = 'Start';
-                        piece.appendChild(startPoint);
-                    }
-                    // Add faucet (end point)
-                    else if (i === this.endCell) {
-                        const piece = document.createElement('div');
-                        piece.className = 'solution-piece';
-                        piece.style.backgroundImage = `url(${this.createFaucetImage()})`;
-                        cell.appendChild(piece);
-                        
-                        const endPoint = document.createElement('div');
-                        endPoint.className = 'end-point';
-                        endPoint.textContent = 'End';
-                        piece.appendChild(endPoint);
-                    }
-                    // Add solution pipes (if any)
-                    else if (this.solutions[this.currentLevel-1]?.pipes[i]) {
-                        const pieceType = this.solutions[this.currentLevel-1].pipes[i];
-                        const piece = document.createElement('div');
-                        piece.className = 'solution-piece';
-                        piece.style.backgroundImage = `url(${this.pieceTypes[pieceType].image})`;
-                        cell.appendChild(piece);
-                    }
-                    
-                    solutionBoard.appendChild(cell);
-                }
-                
-                // Add solution path visualization
-                const solutionPath = this.solutions[this.currentLevel-1]?.path || [];
-                solutionPath.forEach(index => {
-                    const cell = solutionBoard.children[index];
-                    if (cell) {
-                        const pathIndicator = document.createElement('div');
-                        pathIndicator.className = 'solution-path';
-                        cell.appendChild(pathIndicator);
-                    }
-                });
-                
-                content.innerHTML = `
-                    <h2>เฉลย Level ${this.currentLevel}</h2>
-                    <div>${this.levels[this.currentLevel-1].name}</div>
+                overlay.className = 'overlay-message';
+                overlay.innerHTML = `
+                    <div class="overlay-content">
+                        <h2>ด่านที่ ${this.currentLevel}</h2>
+                        <p>${this.levels[this.currentLevel-1].name}</p>
+                        <button class="big-btn" onclick="game.startGame(this)">เริ่มเกม</button>
+                    </div>
                 `;
-                content.appendChild(solutionBoard);
-                
-                const closeButton = document.createElement('button');
-                closeButton.className = 'btn-primary';
-                closeButton.textContent = 'ปิด';
-                closeButton.onclick = () => overlay.remove();
-                content.appendChild(closeButton);
-                
-                overlay.appendChild(content);
                 document.body.appendChild(overlay);
             }
 
-            nextLevel() {
-                this.removeMessages();
-                this.loadLevel(this.currentLevel + 1);
+            startGame(btn) {
+                btn.closest('.overlay-message').remove();
+                this.gameStarted = true;
+                this.canMovePieces = true;
+                document.getElementById('testSystemBtn').disabled = false;
+                
+                this.timer = setInterval(() => {
+                    this.timeLeft--;
+                    const m = Math.floor(this.timeLeft / 60).toString().padStart(2,'0');
+                    const s = (this.timeLeft % 60).toString().padStart(2,'0');
+                    document.getElementById('timeLeft').textContent = `${m}:${s}`;
+                    
+                    if (this.timeLeft <= 0) {
+                        clearInterval(this.timer);
+                        this.showMessage('เวลาหมด!', 'ลองใหม่อีกครั้ง', () => this.resetLevel());
+                    }
+                }, 1000);
             }
 
-            resetLevel() {
-                // เคลียร์ข้อความ overlay และหยุดตัวจับเวลาเดิม
-                this.removeMessages();
-                if (this.timer) {
-                    clearInterval(this.timer);
-                    this.timer = null;
-                }
-                // รีเซตกระดานโดยเก็บตำแหน่งวาวน้ำและก็อกน้ำเดิม
-                this.board = Array(this.totalPieces).fill(null);
-                this.board[this.startCell] = 'valve';
-                this.board[this.endCell] = 'faucet';
-                this.currentScore = 10;
-                this.timeLeft = 300;
-                this.gameStarted = false;
-                this.gameCompleted = false;
+            testSystem() {
+                if (!this.gameStarted) return;
                 this.canMovePieces = false;
-
-                // อัปเดตคะแนนและเวลาใน UI
-                document.getElementById('currentScore').textContent = this.currentScore;
-                document.getElementById('timeLeft').textContent = '05:00';
-                document.getElementById('timerDisplay').classList.remove('timer-warning');
                 document.getElementById('testSystemBtn').disabled = true;
+                
+                // Clear old status
+                document.querySelectorAll('.board-cell').forEach(c => c.classList.remove('correct', 'incorrect'));
+                document.querySelectorAll('.water-flow').forEach(e => e.remove());
 
-                // สร้างกระดานและชิ้นส่วนใหม่ เพื่อให้ถังขยะและดรากกลไกกลับมาทำงาน
-                this.generateBoardGrid();
-                this.generatePuzzlePieces();
-
-                // แสดงข้อความเริ่มเกมใหม่ ให้ผู้เล่นกดเริ่มเกมอีกครั้ง
-                setTimeout(() => {
-                    this.showStartPrompt();
-                }, 0);
+                // Logic การไหลของน้ำ
+                this.simulateWaterFlow();
             }
 
-            goToFirstLevel() {
-                this.removeMessages();
-                this.totalScore = 0;
-                document.getElementById('totalScore').textContent = this.totalScore;
-                this.loadLevel(1);
+            simulateWaterFlow() {
+                let current = this.startCell;
+                // หาทางออกแรกจาก Valve (Valve ต่อได้รอบทิศ)
+                let flowDir = this.findValveConnection(current);
+                
+                if (!flowDir) {
+                    this.failFlow(current, "จุดเริ่มต้นไม่ได้ต่อท่อไว้!");
+                    return;
+                }
+
+                const delay = 300;
+                let stepCount = 0;
+
+                const nextStep = () => {
+                    const cellEl = document.querySelector(`.board-cell[data-index="${current}"]`);
+                    if (cellEl) cellEl.classList.add('correct');
+
+                    // ถ้าถึงปลายทาง
+                    if (current === this.endCell) {
+                         this.successFlow();
+                         return;
+                    }
+
+                    // คำนวณช่องถัดไป
+                    let nextIdx;
+                    if (flowDir === 'top') nextIdx = current - 6;
+                    if (flowDir === 'bottom') nextIdx = current + 6;
+                    if (flowDir === 'left') nextIdx = current - 1;
+                    if (flowDir === 'right') nextIdx = current + 1;
+
+                    // ตรวจสอบว่ามีช่องถัดไปไหม
+                    if (nextIdx < 0 || nextIdx >= 36 || !this.board[nextIdx]) {
+                        this.failFlow(current, "ทางตัน! ท่อไม่เชื่อมต่อ");
+                        return;
+                    }
+
+                    // ตรวจสอบการเชื่อมต่อของท่อถัดไป
+                    const nextPiece = this.board[nextIdx];
+                    if (nextPiece === 'faucet') {
+                         // Faucet รับได้ทุกทิศ
+                         current = nextIdx;
+                         setTimeout(nextStep, delay);
+                         return;
+                    }
+
+                    const incomingDir = this.getOppositeDir(flowDir);
+                    const connections = this.pieceTypes[nextPiece].connections;
+
+                    if (!connections.includes(incomingDir)) {
+                         this.failFlow(nextIdx, "ท่อต่อไม่ลงล็อค!");
+                         return;
+                    }
+
+                    // หาทางออกต่อไป
+                    const nextOut = connections.find(d => d !== incomingDir);
+                    flowDir = nextOut;
+                    current = nextIdx;
+                    
+                    stepCount++;
+                    if(stepCount > 36) { this.failFlow(current, "เกิดข้อผิดพลาด (วนลูป)"); return; }
+
+                    setTimeout(nextStep, delay);
+                };
+
+                nextStep();
+            }
+
+            findValveConnection(valveIdx) {
+                // เช็ค 4 ทิศรอบ Valve ว่ามีท่อไหนหันด้าน input เข้าหา Valve ไหม
+                const checks = [
+                    { dir: 'top', idx: valveIdx - 6, req: 'bottom' },
+                    { dir: 'bottom', idx: valveIdx + 6, req: 'top' },
+                    { dir: 'left', idx: valveIdx - 1, req: 'right' },
+                    { dir: 'right', idx: valveIdx + 1, req: 'left' }
+                ];
+
+                for (let c of checks) {
+                    if (c.idx >= 0 && c.idx < 36) {
+                        const p = this.board[c.idx];
+                        if (p && this.pieceTypes[p] && this.pieceTypes[p].connections.includes(c.req)) {
+                            return c.dir;
+                        }
+                    }
+                }
+                return null;
+            }
+
+            getOppositeDir(dir) {
+                if(dir==='top') return 'bottom';
+                if(dir==='bottom') return 'top';
+                if(dir==='left') return 'right';
+                if(dir==='right') return 'left';
+                return null;
+            }
+
+            failFlow(idx, msg) {
+                const cell = document.querySelector(`.board-cell[data-index="${idx}"]`);
+                if(cell) cell.classList.add('incorrect');
+                setTimeout(() => {
+                    this.showMessage("ยังไม่ถูกต้อง ❌", msg, () => {
+                        this.canMovePieces = true;
+                        document.getElementById('testSystemBtn').disabled = false;
+                        document.querySelectorAll('.board-cell').forEach(c => c.classList.remove('correct', 'incorrect'));
+                    });
+                }, 500);
+            }
+
+            successFlow() {
+                clearInterval(this.timer);
+                this.totalScore += 10;
+                
+                const isLastLevel = this.currentLevel === this.totalLevels;
+                const title = isLastLevel ? "ยินดีด้วย! จบเกมแล้ว 🎉" : "ยอดเยี่ยม! ผ่านด่าน ✅";
+                const btnText = isLastLevel ? "เล่นอีกครั้ง" : "ด่านต่อไป";
+                
+                setTimeout(() => {
+                    this.showMessage(title, `คุณทำได้คะแนนรวม ${this.totalScore}`, () => {
+                        if (isLastLevel) this.resetGame();
+                        else this.loadLevel(this.currentLevel + 1);
+                    });
+                }, 500);
+            }
+
+            showMessage(title, text, callback) {
+                const overlay = document.createElement('div');
+                overlay.className = 'overlay-message';
+                overlay.innerHTML = `
+                    <div class="overlay-content">
+                        <h2>${title}</h2>
+                        <p>${text}</p>
+                        <button class="big-btn">ตกลง</button>
+                    </div>
+                `;
+                overlay.querySelector('button').onclick = () => {
+                    overlay.remove();
+                    if(callback) callback();
+                };
+                document.body.appendChild(overlay);
             }
 
             resetGame() {
-                this.removeMessages();
                 this.totalScore = 0;
                 this.loadLevel(1);
             }
-
-            removeMessages() {
-                // Remove any overlay messages from the DOM
-                document.querySelectorAll('.success-message, .error-message, .final-score-message, .solution-overlay').forEach(msg => msg.remove());
-                // Re‑enable piece movement if the game has not been completed. Without
-                // this, pieces would remain immovable after an error test or message.
-                if (!this.gameCompleted) {
-                    this.canMovePieces = true;
-                }
+            
+            resetLevel() {
+                this.loadLevel(this.currentLevel);
             }
 
-            updateTimerDisplay() {
-                const minutes = Math.floor(this.timeLeft / 60);
-                const seconds = this.timeLeft % 60;
-                const timerDisplay = document.getElementById('timeLeft');
-                
-                timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                
-                // Add warning class when time is low
-                const timerInfo = document.getElementById('timerDisplay');
-                if (this.timeLeft <= 60) {
-                    timerInfo.classList.add('timer-warning');
-                } else {
-                    timerInfo.classList.remove('timer-warning');
-                }
-            }
-
-            // Image creation methods for pipe pieces
-            createValveImage() {
-                /*
-                 * Draw a standalone valve with a central body and four blue stubs
-                 * indicating that pipes may connect from any direction. The handle
-                 * is drawn at the top of the valve body. No built‑in pipe is
-                 * included so that the player must place pipes around the valve.
-                 */
-                const canvas = document.createElement('canvas');
-                canvas.width = 100;
-                canvas.height = 100;
-                const ctx = canvas.getContext('2d');
-
-                // Draw blue stubs for connections
-                ctx.fillStyle = '#0984e3';
-                // Top stub
-                ctx.fillRect(48, 0, 4, 30);
-                // Bottom stub
-                ctx.fillRect(48, 70, 4, 30);
-                // Left stub
-                ctx.fillRect(0, 48, 30, 4);
-                // Right stub
-                ctx.fillRect(70, 48, 30, 4);
-
-                // Valve body (grey circle)
-                ctx.fillStyle = '#6c757d';
-                ctx.beginPath();
-                ctx.arc(50, 50, 18, 0, Math.PI * 2);
-                ctx.fill();
-
-                // Valve handle (golden handle at the top)
-                ctx.fillStyle = '#fdcb6e';
-                // Stem of handle
-                ctx.fillRect(47, 20, 6, 18);
-                // Handle knob
-                ctx.beginPath();
-                ctx.arc(50, 20, 6, 0, Math.PI * 2);
-                ctx.fill();
-                
-                return canvas.toDataURL();
-            }
-
-            createFaucetImage() {
-                /*
-                 * Draw a faucet head similar to the valve: a central body with
-                 * blue connection stubs on all four sides. This removes the
-                 * built‑in pipe so that pipes may connect from any direction.
-                 */
-                const canvas = document.createElement('canvas');
-                canvas.width = 100;
-                canvas.height = 100;
-                const ctx = canvas.getContext('2d');
-
-                // Blue stubs for pipe connections (use faucet colour #00b894)
-                ctx.fillStyle = '#00b894';
-                // Top stub
-                ctx.fillRect(48, 0, 4, 30);
-                // Bottom stub
-                ctx.fillRect(48, 70, 4, 30);
-                // Left stub
-                ctx.fillRect(0, 48, 30, 4);
-                // Right stub
-                ctx.fillRect(70, 48, 30, 4);
-
-                // Faucet body (grey circle)
-                ctx.fillStyle = '#6c757d';
-                ctx.beginPath();
-                ctx.arc(50, 50, 18, 0, Math.PI * 2);
-                ctx.fill();
-
-                // Handle (golden) on top of the body
-                ctx.fillStyle = '#fdcb6e';
-                ctx.fillRect(47, 20, 6, 18);
-                ctx.beginPath();
-                ctx.arc(50, 20, 6, 0, Math.PI * 2);
-                ctx.fill();
-
-                return canvas.toDataURL();
-            }
-
-            createStraightVerticalPipeImage() {
-                const canvas = document.createElement('canvas');
-                canvas.width = 100;
-                canvas.height = 100;
-                const ctx = canvas.getContext('2d');
-                
-                ctx.fillStyle = '#0984e3';
-                ctx.fillRect(45, 0, 10, 100);
-                
-                // Pipe connections
-                ctx.fillRect(40, 0, 20, 10);
-                ctx.fillRect(40, 90, 20, 10);
-                
-                return canvas.toDataURL();
-            }
-
-            createStraightHorizontalPipeImage() {
-                const canvas = document.createElement('canvas');
-                canvas.width = 100;
-                canvas.height = 100;
-                const ctx = canvas.getContext('2d');
-                
-                ctx.fillStyle = '#0984e3';
-                ctx.fillRect(0, 45, 100, 10);
-                
-                // Pipe connections
-                ctx.fillRect(0, 40, 10, 20);
-                ctx.fillRect(90, 40, 10, 20);
-                
-                return canvas.toDataURL();
-            }
-
-            createLeftTopPipeImage() {
-                const canvas = document.createElement('canvas');
-                canvas.width = 100;
-                canvas.height = 100;
-                const ctx = canvas.getContext('2d');
-                
-                ctx.fillStyle = '#0984e3';
-                // Vertical part
-                ctx.fillRect(45, 0, 10, 55);
-                // Horizontal part
-                ctx.fillRect(0, 45, 55, 10);
-                // Curve
-                ctx.beginPath();
-                ctx.arc(55, 55, 10, Math.PI, Math.PI * 1.5);
-                ctx.fill();
-                
-                // Pipe connections
-                ctx.fillRect(40, 0, 20, 10);
-                ctx.fillRect(0, 40, 10, 20);
-                
-                return canvas.toDataURL();
-            }
-
-            createRightTopPipeImage() {
-                const canvas = document.createElement('canvas');
-                canvas.width = 100;
-                canvas.height = 100;
-                const ctx = canvas.getContext('2d');
-                
-                ctx.fillStyle = '#0984e3';
-                // Vertical part
-                ctx.fillRect(45, 0, 10, 55);
-                // Horizontal part
-                ctx.fillRect(45, 45, 55, 10);
-                // Curve
-                ctx.beginPath();
-                ctx.arc(45, 55, 10, Math.PI * 1.5, 0);
-                ctx.fill();
-                
-                // Pipe connections
-                ctx.fillRect(40, 0, 20, 10);
-                ctx.fillRect(90, 40, 10, 20);
-                
-                return canvas.toDataURL();
-            }
-
-            createLeftBottomPipeImage() {
-                const canvas = document.createElement('canvas');
-                canvas.width = 100;
-                canvas.height = 100;
-                const ctx = canvas.getContext('2d');
-                
-                ctx.fillStyle = '#0984e3';
-                // Vertical part
-                ctx.fillRect(45, 45, 10, 55);
-                // Horizontal part
-                ctx.fillRect(0, 45, 55, 10);
-                // Curve
-                ctx.beginPath();
-                ctx.arc(55, 45, 10, Math.PI * 0.5, Math.PI);
-                ctx.fill();
-                
-                // Pipe connections
-                ctx.fillRect(40, 90, 20, 10);
-                ctx.fillRect(0, 40, 10, 20);
-                
-                return canvas.toDataURL();
-            }
-
-            createRightBottomPipeImage() {
-                const canvas = document.createElement('canvas');
-                canvas.width = 100;
-                canvas.height = 100;
-                const ctx = canvas.getContext('2d');
-                
-                ctx.fillStyle = '#0984e3';
-                // Vertical part
-                ctx.fillRect(45, 45, 10, 55);
-                // Horizontal part
-                ctx.fillRect(45, 45, 55, 10);
-                // Curve
-                ctx.beginPath();
-                ctx.arc(45, 45, 10, 0, Math.PI * 0.5);
-                ctx.fill();
-                
-                // Pipe connections
-                ctx.fillRect(40, 90, 20, 10);
-                ctx.fillRect(90, 40, 10, 20);
-                
-                return canvas.toDataURL();
+            // --- Canvas Image Generators (เหมือนเดิมแต่ย่อโค้ด) ---
+            createValveImage() { return this.drawCanvas(ctx => {
+                ctx.fillStyle='#6c757d'; ctx.beginPath(); ctx.arc(50,50,25,0,7); ctx.fill();
+                ctx.fillStyle='#0984e3'; ctx.fillRect(45,10,10,20); ctx.fillRect(45,70,10,20); ctx.fillRect(10,45,20,10); ctx.fillRect(70,45,20,10);
+                ctx.fillStyle='#fdcb6e'; ctx.fillRect(40,20,20,10); 
+            }); }
+            createFaucetImage() { return this.drawCanvas(ctx => {
+                ctx.fillStyle='#00b894'; ctx.beginPath(); ctx.arc(50,50,25,0,7); ctx.fill();
+                ctx.fillStyle='#fdcb6e'; ctx.fillRect(45,10,10,15); 
+            }); }
+            createPipeImage(conns) { return this.drawCanvas(ctx => {
+                ctx.fillStyle='#0984e3';
+                if(conns.includes('top')) ctx.fillRect(40,0,20,55);
+                if(conns.includes('bottom')) ctx.fillRect(40,45,20,55);
+                if(conns.includes('left')) ctx.fillRect(0,40,55,20);
+                if(conns.includes('right')) ctx.fillRect(45,40,55,20);
+                // Center joint
+                ctx.beginPath(); ctx.arc(50,50,11,0,7); ctx.fill();
+            }); }
+            drawCanvas(drawFn) {
+                const c = document.createElement('canvas'); c.width=100; c.height=100;
+                drawFn(c.getContext('2d')); return c.toDataURL();
             }
         }
 
-        // Initialize the game
         const game = new PlumbingGame();
     </script>
 </body>
